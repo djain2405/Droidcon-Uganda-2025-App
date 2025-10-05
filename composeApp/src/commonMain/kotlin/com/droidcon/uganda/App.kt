@@ -14,6 +14,7 @@ import com.droidcon.uganda.ui.screens.AgendaScreen
 import com.droidcon.uganda.ui.screens.FavoritesScreen
 import com.droidcon.uganda.ui.screens.SpeakersScreen
 import com.droidcon.uganda.ui.theme.DroidConTheme
+import com.droidcon.uganda.utils.TimeZoneUtils
 
 enum class AppTab(
     val title: String,
@@ -118,13 +119,23 @@ fun AboutDialog(onDismiss: () -> Unit) {
         },
         text = {
             Column {
+                val userTimezoneName = TimeZoneUtils.getUserTimezoneName()
+                val isLocalTime = !TimeZoneUtils.isInConferenceTimezone()
+
                 Text(
                     "🇺🇬 DroidCon Uganda 2025\n\n" +
                     "Join Uganda's premier Android developer conference! " +
                     "Connect with fellow developers, learn from industry experts, " +
                     "and discover the latest in Android development.\n\n" +
-                    "📅 Date: Coming Soon\n" +
-                    "📍 Location: Kampala, Uganda\n\n" +
+                    "📅 Date: August 15, 2025\n" +
+                    "📍 Location: Kampala, Uganda\n" +
+                    "🕐 Conference Timezone: East Africa Time (EAT, UTC+3)\n\n" +
+                    if (isLocalTime) {
+                        "⏰ Times shown in your timezone ($userTimezoneName)\n" +
+                        "Sessions are automatically converted from EAT\n\n"
+                    } else {
+                        "⏰ You're in the conference timezone!\n\n"
+                    } +
                     "Follow us on Twitter: @DroidConUganda\n\n" +
                     "Built with ❤️ using Compose Multiplatform",
                     style = MaterialTheme.typography.bodyMedium

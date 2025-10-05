@@ -1,5 +1,7 @@
 package com.droidcon.uganda.data
 
+import kotlinx.datetime.LocalDateTime
+
 data class Speaker(
     val id: String,
     val name: String,
@@ -15,8 +17,8 @@ data class Session(
     val id: String,
     val title: String,
     val description: String,
-    val startTime: String,
-    val endTime: String,
+    val startTime: LocalDateTime,  // Now uses LocalDateTime
+    val endTime: LocalDateTime,    // Now uses LocalDateTime
     val speaker: Speaker,
     val track: Track,
     val room: String,

@@ -59,11 +59,17 @@ The APK will be at: `composeApp/build/outputs/apk/debug/composeApp-debug.apk`
 
 Once the app runs, you can:
 
-1. **Browse Agenda** - See 12 conference sessions with details
+1. **Browse Agenda** - See 12 conference sessions with details (times in EAT timezone)
 2. **View Speakers** - Explore 6 speaker profiles
 3. **Save Favorites** - Tap ⭐ to add sessions to "My Agenda"
-4. **Learn About DroidCon** - Tap ℹ️ in the top bar
+4. **Learn About DroidCon** - Tap ℹ️ in the top bar (includes timezone info)
 5. **Try Dark Mode** - Switch your device/simulator to dark mode
+
+**Timezone Support**:
+- Session times are stored in **East Africa Time (EAT, UTC+3)** - Uganda's timezone
+- The app **automatically converts** times to your device's local timezone
+- Example: If you're in PST (UTC-8), a session at 9:00 AM EAT shows as 10:00 PM (previous day)
+- The About dialog shows your current timezone and conversion status
 
 ## Development
 

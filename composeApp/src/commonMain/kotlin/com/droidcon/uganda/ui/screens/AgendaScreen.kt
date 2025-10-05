@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.data.SessionLevel
 import com.droidcon.uganda.ui.ConferenceViewModel
+import com.droidcon.uganda.utils.TimeZoneUtils
 
 @Composable
 fun AgendaScreen(viewModel: ConferenceViewModel) {
@@ -111,8 +112,10 @@ fun SessionCard(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(modifier = Modifier.width(4.dp))
+                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
+                    val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
                     Text(
-                        "${session.startTime} - ${session.endTime}",
+                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -252,8 +255,10 @@ fun SessionDetailDialog(
             Column {
                 Text(session.title, style = MaterialTheme.typography.titleLarge)
                 Spacer(modifier = Modifier.height(4.dp))
+                val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
+                val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
                 Text(
-                    "${session.startTime} - ${session.endTime}",
+                    "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

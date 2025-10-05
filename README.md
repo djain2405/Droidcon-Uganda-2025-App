@@ -35,7 +35,9 @@ The app includes a rich local dataset featuring:
 - 12 conference sessions across 5 tracks (Android, Kotlin, Design, Cloud, Keynote)
 - 6 expert speakers from Uganda's tech ecosystem (Jumia, SafeBoda, MTN, Andela, JetBrains, Flutterwave)
 - Sessions covering beginner to advanced levels
-- Realistic conference schedule (9:00 AM - 4:45 PM)
+- Realistic conference schedule (9:00 AM - 4:45 PM EAT)
+- **Automatic timezone conversion**: Times stored in East Africa Time (EAT, UTC+3) and displayed in your local timezone
+- Smart timezone detection with visual indicators
 
 ## Running the App 🚀
 

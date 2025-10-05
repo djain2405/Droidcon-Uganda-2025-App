@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Speaker
 import com.droidcon.uganda.ui.ConferenceViewModel
+import com.droidcon.uganda.utils.TimeZoneUtils
 
 @Composable
 fun SpeakersScreen(viewModel: ConferenceViewModel) {
@@ -275,8 +276,10 @@ fun SpeakerDetailDialog(
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
+                                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
+                                    val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
                                     Text(
-                                        "${session.startTime} - ${session.endTime}",
+                                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.primary,
                                         fontWeight = FontWeight.Bold
