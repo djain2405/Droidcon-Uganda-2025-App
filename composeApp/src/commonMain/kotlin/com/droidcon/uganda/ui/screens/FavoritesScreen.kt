@@ -42,7 +42,9 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
             .groupBy { session ->
                 TimeZoneUtils.getDateKey(session.startTime)
             }
-            .toSortedMap()
+            .toList()
+            .sortedBy { it.first }
+            .toMap()
     }
 
     Column(
@@ -86,7 +88,7 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                         }
                     }
 
-                    sessionsByDate.forEach { (dateKey, sessionsForDate) ->
+                    for ((dateKey, sessionsForDate) in sessionsByDate.entries) {
                         // Only show date header if viewing all days
                         if (selectedDay == null) {
                             item {

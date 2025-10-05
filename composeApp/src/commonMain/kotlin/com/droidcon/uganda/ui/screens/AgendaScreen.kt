@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.data.SessionLevel
 import com.droidcon.uganda.ui.ConferenceViewModel
+import com.droidcon.uganda.ui.UiState
 import com.droidcon.uganda.utils.TimeZoneUtils
 
 @Composable
@@ -29,6 +30,7 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
     var selectedSession by remember { mutableStateOf<Session?>(null) }
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
     val selectedDay by viewModel.selectedDay.collectAsState()
+    val sessionsState by viewModel.sessionsState.collectAsState()
 
     // Get filtered sessions based on selected day
     val displaySessions = remember(selectedDay, viewModel.sessions) {
@@ -37,9 +39,13 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
 
     // Group sessions by date
     val sessionsByDate = remember(displaySessions) {
-        displaySessions.groupBy { session ->
-            TimeZoneUtils.getDateKey(session.startTime)
-        }.toSortedMap()
+        displaySessions
+            .groupBy { session ->
+                TimeZoneUtils.getDateKey(session.startTime)
+            }
+            .toList()
+            .sortedBy { it.first }
+            .toMap()
     }
 
     Column(
@@ -56,51 +62,61 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             )
         }
 
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            item {
-                Text(
-                    "Conference Schedule",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(8.dp))
+        // Show loading indicator if data is loading
+        if (sessionsState is UiState.Loading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
             }
-
-            sessionsByDate.forEach { (dateKey, sessionsForDate) ->
-                // Only show date header if viewing all days
-                if (selectedDay == null) {
-                    item {
-                        val firstSession = sessionsForDate.first()
-                        val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
-
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text(
-                                TimeZoneUtils.formatDate(localDate),
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                    }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                item {
+                    Text(
+                        "Conference Schedule",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                items(sessionsForDate) { session ->
-                    SessionCard(
-                        session = session,
-                        isFavorite = session.id in favoriteIds,
-                        onToggleFavorite = { viewModel.toggleFavorite(session.id) },
-                        onClick = { selectedSession = session }
-                    )
+                for ((dateKey, sessionsForDate) in sessionsByDate.entries) {
+                    // Only show date header if viewing all days
+                    if (selectedDay == null) {
+                        item {
+                            val firstSession = sessionsForDate.first()
+                            val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
+
+                            Surface(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text(
+                                    TimeZoneUtils.formatDate(localDate),
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+                        }
+                    }
+
+                    items(sessionsForDate) { session ->
+                        SessionCard(
+                            session = session,
+                            isFavorite = session.id in favoriteIds,
+                            onToggleFavorite = { viewModel.toggleFavorite(session.id) },
+                            onClick = { selectedSession = session }
+                        )
+                    }
                 }
             }
         }

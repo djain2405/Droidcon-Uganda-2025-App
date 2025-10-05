@@ -1,7 +1,8 @@
 package com.droidcon.uganda.ui
 
 import androidx.lifecycle.ViewModel
-import com.droidcon.uganda.data.LocalDataSource
+import androidx.lifecycle.viewModelScope
+import com.droidcon.uganda.data.ConferenceRepository
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.data.Speaker
 import com.droidcon.uganda.utils.TimeZoneUtils
@@ -9,8 +10,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class ConferenceViewModel : ViewModel() {
+sealed class UiState<out T> {
+    data object Loading : UiState<Nothing>()
+    data class Success<T>(val data: T) : UiState<T>()
+    data class Error(val message: String) : UiState<Nothing>()
+}
+
+class ConferenceViewModel(
+    private val repository: ConferenceRepository = ConferenceRepository()
+) : ViewModel() {
 
     private val _favoriteSessionIds = MutableStateFlow<Set<String>>(emptySet())
     val favoriteSessionIds: StateFlow<Set<String>> = _favoriteSessionIds.asStateFlow()
@@ -18,15 +28,58 @@ class ConferenceViewModel : ViewModel() {
     private val _selectedDay = MutableStateFlow<String?>(null)
     val selectedDay: StateFlow<String?> = _selectedDay.asStateFlow()
 
-    val sessions: List<Session> = LocalDataSource.sessions
-    val speakers: List<Speaker> = LocalDataSource.speakers
+    private val _sessionsState = MutableStateFlow<UiState<List<Session>>>(UiState.Loading)
+    val sessionsState: StateFlow<UiState<List<Session>>> = _sessionsState.asStateFlow()
+
+    private val _speakersState = MutableStateFlow<UiState<List<Speaker>>>(UiState.Loading)
+    val speakersState: StateFlow<UiState<List<Speaker>>> = _speakersState.asStateFlow()
+
+    // Public accessors for current data
+    val sessions: List<Session>
+        get() = (_sessionsState.value as? UiState.Success)?.data ?: emptyList()
+
+    val speakers: List<Speaker>
+        get() = (_speakersState.value as? UiState.Success)?.data ?: emptyList()
 
     // Get all unique conference days
-    val conferenceDays: List<String> by lazy {
-        sessions
+    val conferenceDays: List<String>
+        get() = sessions
             .map { TimeZoneUtils.getDateKey(it.startTime) }
             .distinct()
             .sorted()
+
+    init {
+        loadData()
+    }
+
+    private fun loadData() {
+        viewModelScope.launch {
+            // Load sessions
+            _sessionsState.value = UiState.Loading
+            val sessionsResult = repository.getSessions()
+            _sessionsState.value = sessionsResult.fold(
+                onSuccess = { UiState.Success(it) },
+                onFailure = {
+                    // Fallback to local data on error
+                    UiState.Success(repository.getLocalSessions())
+                }
+            )
+
+            // Load speakers
+            _speakersState.value = UiState.Loading
+            val speakersResult = repository.getSpeakers()
+            _speakersState.value = speakersResult.fold(
+                onSuccess = { UiState.Success(it) },
+                onFailure = {
+                    // Fallback to local data on error
+                    UiState.Success(repository.getLocalSpeakers())
+                }
+            )
+        }
+    }
+
+    fun refreshData() {
+        loadData()
     }
 
     fun toggleFavorite(sessionId: String) {
@@ -55,5 +108,10 @@ class ConferenceViewModel : ViewModel() {
         } else {
             sessions.filter { TimeZoneUtils.getDateKey(it.startTime) == day }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.close()
     }
 }

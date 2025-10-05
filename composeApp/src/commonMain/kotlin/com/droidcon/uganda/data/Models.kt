@@ -1,7 +1,9 @@
 package com.droidcon.uganda.data
 
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Speaker(
     val id: String,
     val name: String,
@@ -13,6 +15,7 @@ data class Speaker(
     val linkedin: String? = null
 )
 
+@Serializable
 data class Session(
     val id: String,
     val title: String,
@@ -25,6 +28,7 @@ data class Session(
     val level: SessionLevel? = null  // Optional - some sessions may not have a difficulty level
 )
 
+@Serializable
 enum class Track(val displayName: String, val color: Long) {
     ANDROID("Android", 0xFF4CAF50),
     KOTLIN("Kotlin", 0xFF2196F3),
@@ -33,6 +37,7 @@ enum class Track(val displayName: String, val color: Long) {
     KEYNOTE("Keynote", 0xFFF44336)
 }
 
+@Serializable
 enum class SessionLevel {
     BEGINNER,
     INTERMEDIATE,
