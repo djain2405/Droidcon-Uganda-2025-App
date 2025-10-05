@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -27,31 +28,81 @@ import com.droidcon.uganda.utils.TimeZoneUtils
 fun AgendaScreen(viewModel: ConferenceViewModel) {
     var selectedSession by remember { mutableStateOf<Session?>(null) }
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
+    val selectedDay by viewModel.selectedDay.collectAsState()
 
-    LazyColumn(
+    // Get filtered sessions based on selected day
+    val displaySessions = remember(selectedDay, viewModel.sessions) {
+        viewModel.getFilteredSessions()
+    }
+
+    // Group sessions by date
+    val sessionsByDate = remember(displaySessions) {
+        displaySessions.groupBy { session ->
+            TimeZoneUtils.getDateKey(session.startTime)
+        }.toSortedMap()
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        item {
-            Text(
-                "Conference Schedule",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+        // Day selector
+        if (viewModel.conferenceDays.size > 1) {
+            DaySelector(
+                days = viewModel.conferenceDays,
+                selectedDay = selectedDay,
+                onDaySelected = { viewModel.selectDay(it) }
             )
-            Spacer(modifier = Modifier.height(8.dp))
         }
 
-        items(viewModel.sessions) { session ->
-            SessionCard(
-                session = session,
-                isFavorite = session.id in favoriteIds,
-                onToggleFavorite = { viewModel.toggleFavorite(session.id) },
-                onClick = { selectedSession = session }
-            )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            item {
+                Text(
+                    "Conference Schedule",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            sessionsByDate.forEach { (dateKey, sessionsForDate) ->
+                // Only show date header if viewing all days
+                if (selectedDay == null) {
+                    item {
+                        val firstSession = sessionsForDate.first()
+                        val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
+
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(
+                                TimeZoneUtils.formatDate(localDate),
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                    }
+                }
+
+                items(sessionsForDate) { session ->
+                    SessionCard(
+                        session = session,
+                        isFavorite = session.id in favoriteIds,
+                        onToggleFavorite = { viewModel.toggleFavorite(session.id) },
+                        onClick = { selectedSession = session }
+                    )
+                }
+            }
         }
     }
 
@@ -352,4 +403,113 @@ fun SessionDetailDialog(
             }
         }
     )
+}
+
+@Composable
+fun DaySelector(
+    days: List<String>,
+    selectedDay: String?,
+    onDaySelected: (String?) -> Unit
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+        shadowElevation = 2.dp
+    ) {
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // "All Days" chip
+            item {
+                DayChip(
+                    selected = selectedDay == null,
+                    onClick = { onDaySelected(null) },
+                    title = "All",
+                    subtitle = "Days"
+                )
+            }
+
+            // Individual day chips
+            items(days) { day ->
+                val localDate = remember(day) {
+                    kotlinx.datetime.LocalDate.parse(day)
+                }
+
+                val dayOfWeek = localDate.dayOfWeek.name.substring(0, 3)
+                    .lowercase().replaceFirstChar { it.uppercase() }
+                val dayNum = localDate.dayOfMonth.toString()
+
+                DayChip(
+                    selected = selectedDay == day,
+                    onClick = { onDaySelected(day) },
+                    title = dayOfWeek,
+                    subtitle = dayNum
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DayChip(
+    selected: Boolean,
+    onClick: () -> Unit,
+    title: String,
+    subtitle: String
+) {
+    val backgroundColor by animateColorAsState(
+        targetValue = if (selected) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.surface
+        },
+        animationSpec = tween(200)
+    )
+
+    val contentColor by animateColorAsState(
+        targetValue = if (selected) {
+            MaterialTheme.colorScheme.onPrimary
+        } else {
+            MaterialTheme.colorScheme.onSurface
+        },
+        animationSpec = tween(200)
+    )
+
+    Surface(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .width(70.dp)
+            .height(70.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = backgroundColor,
+        shadowElevation = if (selected) 4.dp else 0.dp,
+        border = if (!selected) {
+            androidx.compose.foundation.BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+            )
+        } else null
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                title,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = contentColor
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                subtitle,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.ExtraBold,
+                color = contentColor
+            )
+        }
+    }
 }

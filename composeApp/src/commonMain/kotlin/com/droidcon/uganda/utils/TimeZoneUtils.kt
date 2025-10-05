@@ -41,6 +41,32 @@ object TimeZoneUtils {
     }
 
     /**
+     * Formats a LocalDateTime to display date (e.g., "Friday, August 15")
+     */
+    fun formatDate(dateTime: LocalDateTime): String {
+        val dayOfWeek = dateTime.dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() }
+        val month = dateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }
+        val day = dateTime.dayOfMonth
+        return "$dayOfWeek, $month $day"
+    }
+
+    /**
+     * Formats a LocalDateTime to display short date (e.g., "Aug 15")
+     */
+    fun formatShortDate(dateTime: LocalDateTime): String {
+        val month = dateTime.month.name.substring(0, 3).lowercase().replaceFirstChar { it.uppercase() }
+        val day = dateTime.dayOfMonth
+        return "$month $day"
+    }
+
+    /**
+     * Gets the date part of a LocalDateTime for grouping
+     */
+    fun getDateKey(dateTime: LocalDateTime): String {
+        return "${dateTime.year}-${dateTime.monthNumber.toString().padStart(2, '0')}-${dateTime.dayOfMonth.toString().padStart(2, '0')}"
+    }
+
+    /**
      * Gets a user-friendly timezone name for display
      */
     fun getUserTimezoneName(): String {

@@ -271,12 +271,21 @@ fun SpeakerDetailDialog(
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
+                                // Date if multi-day
+                                val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
+                                Text(
+                                    TimeZoneUtils.formatShortDate(startTimeLocal),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
                                     val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
                                     Text(
                                         "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",

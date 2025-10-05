@@ -16,54 +16,111 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.ui.ConferenceViewModel
+import com.droidcon.uganda.utils.TimeZoneUtils
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
 fun FavoritesScreen(viewModel: ConferenceViewModel) {
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
-    val favoriteSessions = viewModel.sessions.filter { it.id in favoriteIds }
+    val selectedDay by viewModel.selectedDay.collectAsState()
     var selectedSession by remember { mutableStateOf<Session?>(null) }
 
-    Box(
+    // Filter favorites by selected day
+    val favoriteSessions = remember(favoriteIds, selectedDay, viewModel.sessions) {
+        val allFavorites = viewModel.sessions.filter { it.id in favoriteIds }
+        if (selectedDay == null) {
+            allFavorites
+        } else {
+            allFavorites.filter { TimeZoneUtils.getDateKey(it.startTime) == selectedDay }
+        }
+    }
+
+    // Group favorite sessions by date
+    val sessionsByDate = remember(favoriteSessions) {
+        favoriteSessions
+            .sortedBy { it.startTime }
+            .groupBy { session ->
+                TimeZoneUtils.getDateKey(session.startTime)
+            }
+            .toSortedMap()
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        if (favoriteSessions.isEmpty()) {
-            EmptyFavoritesState()
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                item {
-                    Column {
-                        Text(
-                            "My Personal Agenda",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            "${favoriteSessions.size} session${if (favoriteSessions.size != 1) "s" else ""} saved",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-                }
+        // Day selector (reuse from AgendaScreen)
+        if (viewModel.conferenceDays.size > 1) {
+            DaySelector(
+                days = viewModel.conferenceDays,
+                selectedDay = selectedDay,
+                onDaySelected = { viewModel.selectDay(it) }
+            )
+        }
 
-                items(
-                    favoriteSessions.sortedBy { it.startTime },
-                    key = { it.id }
-                ) { session ->
-                    SessionCard(
-                        session = session,
-                        isFavorite = true,
-                        onToggleFavorite = { viewModel.toggleFavorite(session.id) },
-                        onClick = { selectedSession = session }
-                    )
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (favoriteSessions.isEmpty()) {
+                EmptyFavoritesState()
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    item {
+                        Column {
+                            Text(
+                                "My Personal Agenda",
+                                style = MaterialTheme.typography.headlineMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                "${favoriteSessions.size} session${if (favoriteSessions.size != 1) "s" else ""} saved",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+
+                    sessionsByDate.forEach { (dateKey, sessionsForDate) ->
+                        // Only show date header if viewing all days
+                        if (selectedDay == null) {
+                            item {
+                                val firstSession = sessionsForDate.first()
+                                val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
+
+                                Surface(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    shape = RoundedCornerShape(12.dp)
+                                ) {
+                                    Text(
+                                        TimeZoneUtils.formatDate(localDate),
+                                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                            }
+                        }
+
+                        items(
+                            sessionsForDate,
+                            key = { it.id }
+                        ) { session ->
+                            SessionCard(
+                                session = session,
+                                isFavorite = true,
+                                onToggleFavorite = { viewModel.toggleFavorite(session.id) },
+                                onClick = { selectedSession = session }
+                            )
+                        }
+                    }
                 }
             }
         }
