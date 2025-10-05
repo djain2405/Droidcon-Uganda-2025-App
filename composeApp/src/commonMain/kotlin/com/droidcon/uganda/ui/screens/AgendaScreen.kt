@@ -163,32 +163,32 @@ fun SessionCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Speaker Info
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    session.speaker.imageUrl,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Column {
+            // Speaker Info (if available)
+            session.speaker?.let { speaker ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        session.speaker.name,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold
+                        speaker.imageUrl,
+                        style = MaterialTheme.typography.headlineSmall
                     )
-                    Text(
-                        "${session.speaker.title} @ ${session.speaker.company}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column {
+                        Text(
+                            speaker.name,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            "${speaker.title} @ ${speaker.company}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.height(8.dp))
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Room and Level
+            // Room and Level (if available)
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -196,14 +196,16 @@ fun SessionCard(
                     icon = Icons.Default.Place,
                     text = session.room
                 )
-                Chip(
-                    icon = Icons.Default.Build,
-                    text = when (session.level) {
-                        SessionLevel.BEGINNER -> "Beginner"
-                        SessionLevel.INTERMEDIATE -> "Intermediate"
-                        SessionLevel.ADVANCED -> "Advanced"
-                    }
-                )
+                session.level?.let { level ->
+                    Chip(
+                        icon = Icons.Default.Build,
+                        text = when (level) {
+                            SessionLevel.BEGINNER -> "Beginner"
+                            SessionLevel.INTERMEDIATE -> "Intermediate"
+                            SessionLevel.ADVANCED -> "Advanced"
+                        }
+                    )
+                }
             }
         }
     }
@@ -288,32 +290,34 @@ fun SessionDetailDialog(
                     )
                 }
 
-                item {
-                    HorizontalDivider()
-                }
+                session.speaker?.let { speaker ->
+                    item {
+                        HorizontalDivider()
+                    }
 
-                item {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            session.speaker.imageUrl,
-                            style = MaterialTheme.typography.displaySmall
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Column {
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                session.speaker.name,
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
+                                speaker.imageUrl,
+                                style = MaterialTheme.typography.displaySmall
                             )
-                            Text(
-                                session.speaker.title,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                session.speaker.company,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    speaker.name,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    speaker.title,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                Text(
+                                    speaker.company,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                     }
                 }
@@ -321,10 +325,12 @@ fun SessionDetailDialog(
                 item {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Chip(icon = Icons.Default.Place, text = session.room)
-                        Chip(
-                            icon = Icons.Default.Build,
-                            text = session.level.name.lowercase().replaceFirstChar { it.uppercase() }
-                        )
+                        session.level?.let { level ->
+                            Chip(
+                                icon = Icons.Default.Build,
+                                text = level.name.lowercase().replaceFirstChar { it.uppercase() }
+                            )
+                        }
                     }
                 }
             }

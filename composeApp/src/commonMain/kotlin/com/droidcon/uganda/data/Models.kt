@@ -19,10 +19,10 @@ data class Session(
     val description: String,
     val startTime: LocalDateTime,  // Now uses LocalDateTime
     val endTime: LocalDateTime,    // Now uses LocalDateTime
-    val speaker: Speaker,
+    val speaker: Speaker? = null,  // Optional - some sessions may not have a specific speaker
     val track: Track,
     val room: String,
-    val level: SessionLevel
+    val level: SessionLevel? = null  // Optional - some sessions may not have a difficulty level
 )
 
 enum class Track(val displayName: String, val color: Long) {

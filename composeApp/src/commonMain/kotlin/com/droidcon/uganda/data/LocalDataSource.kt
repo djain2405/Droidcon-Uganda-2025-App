@@ -67,14 +67,14 @@ object LocalDataSource {
     val sessions = listOf(
         Session(
             id = "s1",
-            title = "Welcome to DroidCon Uganda 2025!",
-            description = "Join us for an exciting opening keynote as we explore the future of Android development in Uganda and across Africa. We'll discuss the latest trends, opportunities, and how we're building a stronger developer community.",
-            startTime = TimeZoneUtils.createConferenceDateTime(CONFERENCE_DATE, "09:00"),
-            endTime = TimeZoneUtils.createConferenceDateTime(CONFERENCE_DATE, "09:45"),
-            speaker = speakers[4],
+            title = "Registration & Check-In",
+            description = "Attendee check-in, badge collection, networking over breakfast. Sponsor booths open for early networking.",
+            startTime = TimeZoneUtils.createConferenceDateTime(CONFERENCE_DATE, "07:30"),
+            endTime = TimeZoneUtils.createConferenceDateTime(CONFERENCE_DATE, "09:00"),
+            speaker = null,  // No specific speaker for registration
             track = Track.KEYNOTE,
-            room = "Main Hall",
-            level = SessionLevel.BEGINNER
+            room = "Auditorium",
+            level = null  // No difficulty level for registration
         ),
         Session(
             id = "s2",

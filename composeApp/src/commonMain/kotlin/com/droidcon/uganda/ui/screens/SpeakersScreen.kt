@@ -54,7 +54,7 @@ fun SpeakersScreen(viewModel: ConferenceViewModel) {
     selectedSpeaker?.let { speaker ->
         SpeakerDetailDialog(
             speaker = speaker,
-            sessions = viewModel.sessions.filter { it.speaker.id == speaker.id },
+            sessions = viewModel.sessions.filter { it.speaker?.id == speaker.id },
             onDismiss = { selectedSpeaker = null }
         )
     }
