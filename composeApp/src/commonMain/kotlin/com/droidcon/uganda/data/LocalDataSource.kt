@@ -10,59 +10,166 @@ object LocalDataSource {
 
     val speakers = listOf(
         Speaker(
-            id = "1",
+            id = "0",
             name = "Ahmed Nabil",
-            title = "Senior Android Engineer",
-            company = "Jumia Uganda",
-            bio = "Sarah is a passionate Android developer with 8 years of experience building scalable mobile applications. She's a Google Developer Expert and loves mentoring upcoming developers.",
+            title = "Senior Software Tech Lead",
+            company = "Vodafone",
+            bio = "Founder and Leader Of Kotlin Egypt, first and largest Kotlin community in Egypt,\n" +
+                    "helped 100K+ know about Kotlin, Android, and general programming. Created \"Learn Programming\" initiative helped 500+ people from Egypt, Gulf, UK and more, Joined 1M Arab coders as a mentor,\n" +
+                    "currently: Senior Software Tech Lead at Vodafone _VOIS, Previously, worked at HungerStation, Gen. C., and more.\u2028\u2028\n" +
+                    "Social Links:\u2028https://linktr.ee/AhmedNMahran",
             imageUrl = "👩🏿‍💻",
-            twitter = "@sarahokello"
+            linkedin = "https://linkedIn.com/company/KotlinEgypt"
+        ),
+        Speaker(
+            id = "1",
+            name = "Akshay Chordiya",
+            title = "Android Developer",
+            company = "Tinder | Co-Author of Kotlin Blueprints",
+            bio = "Akshay Chordiya is Google Developer Expert for Android & Kotlin | Android Developer @ Tinder ❤\uFE0F and Kotlin Enthusiast.\n" +
+                    "He is an active community speaker who is mostly found talking about Android and Kotlin. He is an avid blogger and author of “Kotlin Blueprints” book and instructor at Caster.IO",
+            imageUrl = "👨🏿‍💻",
         ),
         Speaker(
             id = "2",
-            name = "Anselmo Alexandre",
-            title = "Mobile Architect",
-            company = "SafeBoda",
-            bio = "David specializes in Kotlin Multiplatform and has been instrumental in building cross-platform solutions. He's an advocate for clean architecture and testing.",
-            imageUrl = "👨🏿‍💻",
-            linkedin = "davidmukasa"
+            name = "Anjan kumar Kaleru",
+            title = "Staff IAM Engineer",
+            company = "Sony Interactive Entertainment",
+            bio = "Anjan Kumar K is a Staff IAM Engineer and Product Lead at Sony Interactive Entertainment (PlayStation) with over 10 years of specialized experience in identity and access management. Currently leading global PlayStation identity initiatives for 100+ applications, Anjan manages a team of 7 direct reports while driving strategic IAM roadmap development and implementation.\n" +
+                    "As a Certified Identity Governance Expert and results-driven leader, Anjan has successfully managed multi-million dollar IAM projects, including \$5M+ identity governance initiatives that delivered measurable ROI. His expertise spans the complete IAM ecosystem, with deep technical proficiency in Saviynt, Okta, SailPoint IdentityNow, Active Roles, and cloud platforms.\n" +
+                    "Key achievements include:\n" +
+                    "Reduced UAR cycle time by 50% and ticket SLAs by 80% through process optimization\n" +
+                    "Decreased manual provisioning by 75% across enterprise environments\n" +
+                    "Created 180+ audit-ready reports, saving 2000+ hours annually\n" +
+                    "Achieved 'High Impact' rating at PlayStation for three consecutive years (top 10% in department)\n" +
+                    "Reduced user onboarding time by 60% through automated solutions\n" +
+                    "Anjan holds a Master's in Information Security and Artificial Intelligence from Ferris State University and maintains current certifications in Identity Governance and Product Management. His combination of technical expertise, strategic vision, and proven track record in scaling IAM operations makes him a recognized thought leader in cloud identity governance and enterprise security frameworks.",
+            imageUrl = "👩🏿‍🎨",
         ),
         Speaker(
             id = "3",
-            name = "Jamiu Okanlawon",
-            title = "UX Engineer",
-            company = "MTN Uganda",
-            bio = "Grace bridges the gap between design and development, creating beautiful and accessible user experiences for millions of users across Africa.",
-            imageUrl = "👩🏿‍🎨",
-            twitter = "@gracenamugga"
+            name = "Anselmo Alexandre",
+            title = "Android",
+            company = "SnappMobile",
+            bio = "Olá \uD83D\uDC4B\uD83C\uDFFF,\n" +
+                    "My name is Anselmo Alexandre\n" +
+                    "I am a Sr. Android Engineer at Snapp Mobile Germany.\n" +
+                    "Everyday making people's life easier using tech.\n" +
+                    "\n",
+            imageUrl = "👨🏿‍🔬",
         ),
         Speaker(
             id = "4",
-            name = "Sam Aricha",
-            title = "Cloud Solutions Architect",
-            company = "Andela",
-            bio = "John helps teams build robust backend systems that power mobile applications. He's an expert in Firebase, AWS, and microservices architecture.",
-            imageUrl = "👨🏿‍🔬",
-            linkedin = "johnssemwogerere"
+            name = "Arun Kambhammettu",
+            title = "Software Engineering Manager",
+            company = "AWS",
+            bio = "Arun Kambhammettu is a seasoned software engineering leader with extensive experience in architecting, designing, and deploying scalable, high-performing applications across web, mobile, and cloud platforms. With a strong background in full-stack development, distributed systems, AdTech, and data-driven solutions, he has successfully led engineering teams to deliver enterprise-grade applications and cutting-edge products across diverse industries, including hospitality, travel, automotive, and streaming media.\n" +
+                    "Currently, Arun serves as a Software Engineering Manager at Amazon (AWS Connect), leading a cross-functional team of software and ML engineers to build advanced customer data solutions. He drives initiatives in customer profiling, data mapping, and ML-based segmentation for prominent clients, including United Airlines, Nova Scotia, and Anthology, delivering AI-powered insights and unified 360° customer views.\n" +
+                    "Previously, as a Senior Engineering Manager at Warner Bros. Discovery, Arun oversaw five teams spanning Web, Mobile, AdTech, SEO, and Operations for MotorTrend.com, a platform reaching over 130 million monthly users. His leadership enabled the development of highly scalable digital products, AI-driven personalization, and subscription models that significantly increased user engagement and revenue. Arun has also held pivotal roles at Truckstop.com, AccuRadio, and other organizations, where he spearheaded cloud migrations, introduced machine learning for fraud detection, enhanced DevOps and CICD pipelines, and architected next-gen applications for iOS, Android, and web platforms.\n" +
+                    "A hands-on technologist, Arun is proficient in C#, Python, Node.js, React, Next.js, and major cloud services (AWS, GCP, Azure). He holds a Master’s degree in Management Information Systems from Utah State University and is a certified Microsoft .NET and Azure professional. His passion lies in leveraging AI, data, and cloud-native architectures to build products that are secure, scalable, and impactful.",
+            imageUrl = "👩🏿‍🏫",
         ),
         Speaker(
             id = "5",
-            name = "Georges Byona",
-            title = "Kotlin Evangelist",
-            company = "JetBrains",
-            bio = "Rebecca travels the world teaching developers about Kotlin's latest features. She's particularly interested in Kotlin Multiplatform and Compose.",
-            imageUrl = "👩🏿‍🏫",
-            twitter = "@rebeccanakitto"
+            name = "Caroline Nicole Letaru",
+            title = "Career Coach & Talent Strategist",
+            company = "Kazini Consults | Empowering Tech Professionals to Level Up",
+            bio = "Caroline Nicole Letaru is a seasoned Career Coach and Talent Strategist at Kazini Consults, with over 6+ years of experience empowering tech professionals across 12 countries. She specializes in helping developers and tech talents elevate their careers through skill development, strategic career planning, and effective talent sourcing. With a strong background in technical recruiting and HR management, Nicole has successfully guided hundreds of professionals to build core skills, navigate career transitions, and achieve measurable career growth in the dynamic tech industry.",
+            imageUrl = "👨🏿‍💼",
         ),
         Speaker(
             id = "6",
-            name = "Joshua Musyoki",
-            title = "Android Lead",
-            company = "Flutterwave",
-            bio = "Alex leads the Android team at Flutterwave, building payment solutions used across Africa. He's passionate about performance optimization and security.",
+            name = "Dinoy Raj",
+            title = "Product Engineer",
+            company = "Strollby | Android developer | Jetpack compose | Kotlin | Flutter",
+            bio = "Crafting mobile apps with compose & kotlin",
             imageUrl = "👨🏿‍💼",
-            twitter = "@alexkateregga"
-        )
+        ),
+        Speaker(
+            id = "7",
+            name = "Georges Byona",
+            title = "Mobile Engineer",
+            company = "FlutterFire | AI Enthusiast | Community Lead",
+            bio = "Crafting mobile apps with compose & kotlin",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "8",
+            name = "Indu Priya Uppala",
+            title = "",
+            company = "Infosys McCamish",
+            bio = "Indu Priya Uppala is a highly accomplished Project and Product Manager with over 16 years of experience delivering transformative technology solutions across the insurance, telecommunications, and logistics industries. Currently pursuing an Executive MBA at Georgia Tech, she brings a unique combination of strategic leadership and deep technical expertise to drive large-scale digital transformation initiatives. Indu has spearheaded end-to-end programs for major insurers, including the successful migration of millions of active and inactive policies, the implementation of Salesforce-driven agent portals, microservices-based architectures, and secure API ecosystems that enhance policy lifecycle management. Her experience includes leading cross-functional teams of 20–25 members across onshore and offshore models, orchestrating data governance, UAT, and large-scale system integrations to optimize performance and ensure regulatory compliance. Recognized for her ability to combine innovation with operational excellence, she has delivered measurable outcomes such as cutting claims processing times by more than 70%, streamlining agent workflows, and improving overall system reliability for Fortune 500 clients like John Hancock, TIAA CREF, and MetLife. With expertise spanning Java development, cloud platforms like AWS and Azure, and advanced DevOps practices, Indu excels at transforming complex legacy ecosystems into agile, scalable digital environments. Passionate about mentoring teams and fostering collaboration, she is committed to helping organizations achieve sustainable growth, operational efficiency, and a competitive edge through technology-driven solutions.\n" +
+                    "\n",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "9",
+            name = "Jamiu Okanlawon",
+            title = "Developer Advocate",
+            company = "Invertase | Organizer of the FlutterBytes Conference",
+            bio = "Jamiu Okanlawon is a Developer Advocate at Invertase and a Google Developer Expert (GDE) in Flutter. He brings 7 years of software engineering experience, with over 5 years dedicated to building and deploying Flutter applications.\n" +
+                    "\n" +
+                    "He is the founder of FlutterBytes, a thriving Africa-based community that supports Flutter developers through mentorship, hands-on learning, and collaboration. Jamiu also leads the FlutterBytes Conference, the largest Flutter-focused event in Africa.\n" +
+                    "\n" +
+                    "Passionate about empowering developers, Jamiu blends technical expertise with community leadership to drive growth, learning, and impact across the Flutter ecosystem.\n" +
+                    "\n",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "10",
+            name = "Jayesh Kumar Pandey",
+            title = "Senior DFT Methodology Engineer",
+            company = "ABV-Indian Institute of Information Technology, Gwalior, MP",
+            bio = "Jayesh Kumar Pandey is a Senior DFT Methodology Engineer with over 18 years of experience in semiconductor design, Design-for-Test (DFT), In-System Test (IST), and system-level validation for advanced System-on-Chip (SoC) solutions. He currently leads innovation efforts at a leading semiconductor company in Santa Clara.\n" +
+                    "An IETE Fellow, SCRS Fellow, and IEEE Senior Member, Jayesh has pioneered industry-first advancements in scalable, safety-compliant IST frameworks and DFT architectures significantly enhancing chip reliability and reducing time-to-market. His work has resulted in a U.S. patent on in-system test execution and several peer-reviewed publications.\n" +
+                    "He actively contributes to the research community as a technical program committee (TPC) member and reviewer for top-tier conferences such as ITC, DFTS, and AIC. Jayesh is also a frequent invited speaker on topics related to reliable AI and robotics SoCs.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "11",
+            name = "Joshua Musyoki",
+            title = "Android Engineer",
+            company = "Transsion Kenya",
+            bio = "Joshua Musyoki is an Android Engineer at Transsion Kenya, where he crafts clean and scalable mobile solutions used by real users. He builds not just for developers, but for real users — with a strong focus on performance, usability, and impact at scale. Passionate about developer tools, open-source, and clean architecture, Joshua is currently exploring how to simplify Android development by building reusable libraries and improving developer experience (DX). A firm believer in continuous learning, he’s always evolving — whether it’s through mentoring, contributing to community projects, or staying on the edge of Android’s ever-growing ecosystem. For Joshua, it’s all about building for builders — and making tools that matter.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "12",
+            name = "Joydip Basu",
+            title = "",
+            company = "West bengal university of Technology",
+            bio = "Joydip Basu is a seasoned IT leader with over 19 years of expertise in SAP enterprise solutions, specializing in global program execution and digital transformation within the healthcare and life sciences sectors. He is widely recognized for leading cross-functional teams across geographies and delivering large-scale ERP implementations, including SAP S/4HANA, ECC Suite on HANA, APO, and GTS, seamlessly integrated with cloud platforms such as Salesforce, AWS, and MuleSoft.\n" +
+                    "Throughout his career, Joydip has architected and executed end-to-end ERP transformations that drive operational excellence, regulatory compliance, and process optimization for global enterprises. His work consistently meets stringent regulatory standards such as FDA and HIPAA, ensuring IT system readiness in highly regulated, mission-critical environments.\n" +
+                    "Joydip’s portfolio includes leadership roles in strategic initiatives at industry leaders including Gilead Sciences, Jabil Healthcare, IBM, and Tata Steel. He holds a Master’s degree in Business Administration and is SAP-certified in Supply Chain Management. With a unique combination of strategic insight and technical depth, Joydip is committed to delivering innovative, high-impact solutions that enable organizations to scale, modernize, and thrive in dynamic markets.\n",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "13",
+            name = "Kenneth Mathari",
+            title = "Mobile Developer | Kotlin",
+            company = "",
+            bio = "I'm a passionate Mobile Developer with a strong focus on Kotlin and Kotlin Multiplatform. I’ve spent the last few years building high-quality Android apps and cross-platform solutions that prioritize clean architecture, great user experiences, and scalable codebases. I’m also a strong advocate for open source, and I enjoy exploring how community-driven libraries can accelerate mobile development and bring developers together.\n" +
+                    "\n",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "14",
+            name = "Markus Wendland",
+            title = "Software Craftsman",
+            company = "iits consulting",
+            bio = "Markus is a seasoned software developer with 30 years of experience, starting as a curious script kiddie and growing into a tech expert. Having witnessed the rapid evolution of the industry, he now shares not only technical insights but also a crucial perspective on mental health in software development. Drawing from his own experiences navigating the highs and lows of a demanding career, Markus delivers honest, thought-provoking talks that encourage open conversations about well-being in tech. His mission is to help developers build not just better software, but also healthier, more sustainable careers.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "15",
+            name = "Mrinal Jain",
+            title = "Software Craftsman",
+            company = "iits consulting",
+            bio = "Markus is a seasoned software developer with 30 years of experience, starting as a curious script kiddie and growing into a tech expert. Having witnessed the rapid evolution of the industry, he now shares not only technical insights but also a crucial perspective on mental health in software development. Drawing from his own experiences navigating the highs and lows of a demanding career, Markus delivers honest, thought-provoking talks that encourage open conversations about well-being in tech. His mission is to help developers build not just better software, but also healthier, more sustainable careers.",
+            imageUrl = "👨🏿‍💼",
+        ),
+
+
     )
 
     val sessions = listOf(
