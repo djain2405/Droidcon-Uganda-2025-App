@@ -189,22 +189,29 @@ fun SessionCard(
                     )
                 }
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Track Badge
-                    Surface(
-                        color = Color(session.track.color),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(
-                            session.track.displayName,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Track Badge - Commented out for now
+//                    if (session.track.displayName.isNotEmpty()) {
+//                        session.track.color?.let { trackColor ->
+//                            Surface(
+//                                color = Color(trackColor),
+//                                shape = RoundedCornerShape(8.dp)
+//                            ) {
+//                                Text(
+//                                    session.track.displayName,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+//                                    style = MaterialTheme.typography.labelSmall,
+//                                    color = Color.White,
+//                                    fontWeight = FontWeight.Bold
+//                                )
+//                            }
+//                            Spacer(modifier = Modifier.width(8.dp))
+//                        }
+//                    }
 
                     // Favorite Button
                     IconButton(
@@ -255,25 +262,25 @@ fun SessionCard(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Room and Level (if available)
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Chip(
-                    icon = Icons.Default.Place,
-                    text = session.room
-                )
-                session.level?.let { level ->
-                    Chip(
-                        icon = Icons.Default.Build,
-                        text = when (level) {
-                            SessionLevel.BEGINNER -> "Beginner"
-                            SessionLevel.INTERMEDIATE -> "Intermediate"
-                            SessionLevel.ADVANCED -> "Advanced"
-                        }
-                    )
-                }
-            }
+            // Room and Level - Commented out for now
+//            Row(
+//                horizontalArrangement = Arrangement.spacedBy(12.dp)
+//            ) {
+//                Chip(
+//                    icon = Icons.Default.Place,
+//                    text = session.room
+//                )
+//                session.level?.let { level ->
+//                    Chip(
+//                        icon = Icons.Default.Build,
+//                        text = when (level) {
+//                            SessionLevel.BEGINNER -> "Beginner"
+//                            SessionLevel.INTERMEDIATE -> "Intermediate"
+//                            SessionLevel.ADVANCED -> "Advanced"
+//                        }
+//                    )
+//                }
+//            }
         }
     }
 
@@ -335,18 +342,23 @@ fun SessionDetailDialog(
         },
         text = {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                item {
-                    Surface(
-                        color = Color(session.track.color),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(
-                            session.track.displayName,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
+                // Track Badge - only show if display name is not empty
+                if (session.track.displayName.isNotEmpty()) {
+                    item {
+                        session.track.color?.let { trackColor ->
+                            Surface(
+                                color = Color(trackColor),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text(
+                                    session.track.displayName,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
                     }
                 }
 

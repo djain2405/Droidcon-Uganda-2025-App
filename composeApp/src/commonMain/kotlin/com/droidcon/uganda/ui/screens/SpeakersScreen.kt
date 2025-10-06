@@ -293,16 +293,21 @@ fun SpeakerDetailDialog(
                                         color = MaterialTheme.colorScheme.primary,
                                         fontWeight = FontWeight.Bold
                                     )
-                                    Surface(
-                                        color = androidx.compose.ui.graphics.Color(session.track.color),
-                                        shape = RoundedCornerShape(6.dp)
-                                    ) {
-                                        Text(
-                                            session.track.displayName,
-                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = androidx.compose.ui.graphics.Color.White
-                                        )
+                                    // Track Badge - only show if display name is not empty
+                                    if (session.track.displayName.isNotEmpty()) {
+                                        session.track.color?.let { trackColor ->
+                                            Surface(
+                                                color = androidx.compose.ui.graphics.Color(trackColor),
+                                                shape = RoundedCornerShape(6.dp)
+                                            ) {
+                                                Text(
+                                                    session.track.displayName,
+                                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                                    style = MaterialTheme.typography.labelSmall,
+                                                    color = androidx.compose.ui.graphics.Color.White
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))

@@ -29,12 +29,13 @@ data class Session(
 )
 
 @Serializable
-enum class Track(val displayName: String, val color: Long) {
+enum class Track(val displayName: String, val color: Long?) {
     ANDROID("Android", 0xFF4CAF50),
     KOTLIN("Kotlin", 0xFF2196F3),
     DESIGN("Design & UX", 0xFFFF9800),
     CLOUD("Cloud & Backend", 0xFF9C27B0),
-    KEYNOTE("Keynote", 0xFFF44336)
+    KEYNOTE("Keynote", 0xFFF44336),
+    NONE("", color = null)
 }
 
 @Serializable
