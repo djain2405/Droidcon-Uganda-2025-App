@@ -7,23 +7,24 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// DroidCon Uganda brand colors
-val DroidConGreen = Color(0xFF4CAF50)
-val DroidConDarkGreen = Color(0xFF388E3C)
-val DroidConLightGreen = Color(0xFF81C784)
-val DroidConAccent = Color(0xFFFFEB3B)
-val DroidConOrange = Color(0xFFFF9800)
+// DroidCon Uganda brand colors - from uganda.droidcon.com
+val DroidConOrange = Color(0xFFFA6E50) // Primary orange from website
+val DroidConGreen = Color(0xFF43BC6E) // Primary green from website
+val DroidConDarkOrange = Color(0xFFE85A3C) // Darker shade of orange
+val DroidConLightOrange = Color(0xFFFFAA95) // Lighter shade of orange
+val DroidConDarkGreen = Color(0xFF359956) // Darker shade of green
+val DroidConLightGreen = Color(0xFF6DD18F) // Lighter shade of green
 
 private val LightColorScheme = lightColorScheme(
-    primary = DroidConGreen,
+    primary = DroidConOrange,
     onPrimary = Color.White,
-    primaryContainer = DroidConLightGreen,
-    onPrimaryContainer = DroidConDarkGreen,
-    secondary = DroidConOrange,
+    primaryContainer = DroidConLightOrange,
+    onPrimaryContainer = DroidConDarkOrange,
+    secondary = DroidConGreen,
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFFFE0B2),
-    onSecondaryContainer = Color(0xFFE65100),
-    tertiary = DroidConAccent,
+    secondaryContainer = DroidConLightGreen,
+    onSecondaryContainer = DroidConDarkGreen,
+    tertiary = DroidConGreen,
     background = Color(0xFFFAFAFA),
     surface = Color.White,
     onSurface = Color(0xFF212121),
@@ -31,15 +32,15 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DroidConLightGreen,
-    onPrimary = Color(0xFF1B5E20),
-    primaryContainer = DroidConDarkGreen,
-    onPrimaryContainer = DroidConLightGreen,
-    secondary = DroidConOrange,
-    onSecondary = Color(0xFF4E2600),
-    secondaryContainer = Color(0xFFE65100),
-    onSecondaryContainer = Color(0xFFFFCC80),
-    tertiary = DroidConAccent,
+    primary = DroidConOrange,
+    onPrimary = Color(0xFF4E2600),
+    primaryContainer = DroidConDarkOrange,
+    onPrimaryContainer = DroidConLightOrange,
+    secondary = DroidConGreen,
+    onSecondary = Color(0xFF1B5E20),
+    secondaryContainer = DroidConDarkGreen,
+    onSecondaryContainer = DroidConLightGreen,
+    tertiary = DroidConLightGreen,
     background = Color(0xFF121212),
     surface = Color(0xFF1E1E1E),
     onSurface = Color(0xFFE0E0E0),

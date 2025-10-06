@@ -76,7 +76,7 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                                 "My Personal Agenda",
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
+                                color = MaterialTheme.colorScheme.secondary
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(

@@ -38,7 +38,7 @@ fun SpeakersScreen(viewModel: ConferenceViewModel) {
                 "Our Speakers",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.secondary
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -126,7 +126,7 @@ fun SpeakerCard(
                 Text(
                     speaker.company,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.SemiBold
                 )
             }
@@ -138,7 +138,7 @@ fun SpeakerCard(
                         Icons.Default.Share,
                         contentDescription = "Twitter",
                         modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
                 }
                 speaker.linkedin?.let {
@@ -147,7 +147,7 @@ fun SpeakerCard(
                         Icons.Default.AccountCircle,
                         contentDescription = "LinkedIn",
                         modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
@@ -201,7 +201,7 @@ fun SpeakerDetailDialog(
                     Text(
                         speaker.company,
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -224,13 +224,13 @@ fun SpeakerDetailDialog(
                                         Icons.Default.Share,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
-                                        tint = MaterialTheme.colorScheme.primary
+                                        tint = MaterialTheme.colorScheme.secondary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.primary
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                             }
@@ -240,13 +240,13 @@ fun SpeakerDetailDialog(
                                         Icons.Default.AccountCircle,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
-                                        tint = MaterialTheme.colorScheme.primary
+                                        tint = MaterialTheme.colorScheme.secondary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.primary
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                             }
@@ -290,7 +290,7 @@ fun SpeakerDetailDialog(
                                     Text(
                                         "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
                                         style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.primary,
+                                        color = MaterialTheme.colorScheme.secondary,
                                         fontWeight = FontWeight.Bold
                                     )
                                     // Track Badge - only show if display name is not empty
