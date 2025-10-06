@@ -189,3 +189,6 @@ composeApp/.gradle/
 # Test output
 test-results/
 androidTest-results/
+
+# JVM heap dump files
+*.hprof

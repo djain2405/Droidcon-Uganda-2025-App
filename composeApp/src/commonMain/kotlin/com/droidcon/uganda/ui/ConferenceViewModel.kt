@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 
 sealed class UiState<out T> {
@@ -19,11 +21,18 @@ sealed class UiState<out T> {
 }
 
 class ConferenceViewModel(
-    private val repository: ConferenceRepository = ConferenceRepository()
+    private val repository: ConferenceRepository = ConferenceRepository(),
+    private val favoritesDataStore: com.droidcon.uganda.data.FavoritesDataStore =
+        com.droidcon.uganda.data.FavoritesDataStore(com.droidcon.uganda.data.createDataStore())
 ) : ViewModel() {
 
-    private val _favoriteSessionIds = MutableStateFlow<Set<String>>(emptySet())
-    val favoriteSessionIds: StateFlow<Set<String>> = _favoriteSessionIds.asStateFlow()
+    // Expose favorites from DataStore
+    val favoriteSessionIds: StateFlow<Set<String>> = favoritesDataStore.favoritesFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptySet()
+        )
 
     private val _selectedDay = MutableStateFlow<String?>(null)
     val selectedDay: StateFlow<String?> = _selectedDay.asStateFlow()
@@ -83,17 +92,13 @@ class ConferenceViewModel(
     }
 
     fun toggleFavorite(sessionId: String) {
-        _favoriteSessionIds.update { currentFavorites ->
-            if (sessionId in currentFavorites) {
-                currentFavorites - sessionId
-            } else {
-                currentFavorites + sessionId
-            }
+        viewModelScope.launch {
+            favoritesDataStore.toggleFavorite(sessionId)
         }
     }
 
     fun isFavorite(sessionId: String): Boolean {
-        return sessionId in _favoriteSessionIds.value
+        return sessionId in favoriteSessionIds.value
     }
 
     fun selectDay(day: String?) {

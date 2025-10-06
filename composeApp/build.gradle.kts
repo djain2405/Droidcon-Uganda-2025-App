@@ -37,6 +37,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+            implementation("androidx.datastore:datastore-preferences:1.1.1")
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -55,6 +56,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.datastore.preferences)
         }
     }
 }
