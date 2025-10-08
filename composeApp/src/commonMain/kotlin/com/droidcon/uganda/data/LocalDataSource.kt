@@ -6,7 +6,7 @@ object LocalDataSource {
 
     // Conference dates in EAT timezone
     private const val DAY_1 = "2025-11-10"  // Monday
-    private const val DAY_2 = "2025-08-16"  // Saturday
+    private const val DAY_2 = "2025-11-11"  // Tuesday
 
     val speakers = listOf(
         Speaker(
@@ -268,7 +268,7 @@ object LocalDataSource {
     )
 
     val sessions = listOf(
-        // DAY 1 - Friday, August 15
+        // DAY 1 - Monday, November 10, 2025
         Session(
             id = "s1",
             title = "Registration & Check-In",
@@ -550,94 +550,329 @@ object LocalDataSource {
             room = "Auditorium",
             level = null
         ),
-        // DAY 2 - Saturday, August 16
-//        Session(
-//            id = "s9",
-//            title = "Day 2 Registration & Breakfast",
-//            description = "Morning check-in for Day 2 attendees. Coffee, tea, and light breakfast available.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "08:00"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:00"),
-//            speaker = null,
-//            track = Track.KEYNOTE,
-//            room = "Auditorium",
-//            level = null
-//        ),
-//        Session(
-//            id = "s10",
-//            title = "App Security Best Practices",
-//            description = "Security is crucial! Learn how to protect your app and user data. We'll cover encryption, secure storage, API security, ProGuard/R8, and common security vulnerabilities to avoid.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:30"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:15"),
-//            speaker = speakers[5],
-//            track = Track.ANDROID,
-//            room = "Room A",
-//            level = SessionLevel.ADVANCED
-//        ),
-//        Session(
-//            id = "s11",
-//            title = "Building Offline-First Apps",
-//            description = "Network connectivity isn't guaranteed in many parts of Africa. Learn how to build apps that work seamlessly offline using Room, WorkManager, and sync strategies.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:30"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:15"),
-//            speaker = speakers[0],
-//            track = Track.ANDROID,
-//            room = "Room B",
-//            level = SessionLevel.INTERMEDIATE
-//        ),
-//        Session(
-//            id = "s12",
-//            title = "Performance Optimization Techniques",
-//            description = "Make your app lightning fast! Learn profiling techniques, memory optimization, reducing APK size, improving startup time, and delivering smooth 60fps experiences even on low-end devices.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:30"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:15"),
-//            speaker = speakers[5],
-//            track = Track.ANDROID,
-//            room = "Room A",
-//            level = SessionLevel.ADVANCED
-//        ),
-//        Session(
-//            id = "s13",
-//            title = "Serverless Architecture for Mobile Apps",
-//            description = "Build scalable backends without managing servers! Learn about serverless architectures using Cloud Functions, AWS Lambda, and how they integrate with your Android apps.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:30"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:15"),
-//            speaker = speakers[3],
-//            track = Track.CLOUD,
-//            room = "Room B",
-//            level = SessionLevel.INTERMEDIATE
-//        ),
-//        Session(
-//            id = "s14",
-//            title = "Advanced Kotlin Features for Android",
-//            description = "Explore advanced Kotlin language features including inline functions, reified generics, delegates, and how to write more expressive and maintainable Android code.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "13:00"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "13:45"),
-//            speaker = speakers[4],
-//            track = Track.KOTLIN,
-//            room = "Room A",
-//            level = SessionLevel.ADVANCED
-//        ),
-//        Session(
-//            id = "s15",
-//            title = "Testing Strategies for Android Apps",
-//            description = "Learn comprehensive testing approaches including unit tests, integration tests, UI tests with Espresso, and how to build confidence in your code quality.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "13:00"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "13:45"),
-//            speaker = speakers[1],
-//            track = Track.ANDROID,
-//            room = "Room B",
-//            level = SessionLevel.INTERMEDIATE
-//        ),
-//        Session(
-//            id = "s16",
-//            title = "Closing Keynote: Building the Future Together",
-//            description = "Closing remarks, key takeaways from the conference, and exciting announcements about the future of the Android developer community in Uganda.",
-//            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "16:00"),
-//            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "17:00"),
-//            speaker = speakers[0],
-//            track = Track.KEYNOTE,
-//            room = "Main Hall",
-//            level = null
-//        )
+        // DAY 2 - Tuesday, November 11, 2025
+        Session(
+            id = "s21",
+            title = "Registration & Breakfast Attendee check-in, badge collection",
+            description = "Networking over breakfast Sponsor bo",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "07:35"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "08:50"),
+            speaker = null,
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s22",
+            title = "Don‘t let the AI hype break your mentality",
+            description = "The topic of “AI“ seems to be everywhere these days, especially for software developers. From claiming to be the problem solver for day to day tasks up to apocalyptic scenarios of replacing all jobs, the stories being told vary wildly.\n" +
+                    "\n" +
+                    "Either you get caught by it and your thoughts just spin around how to be an early adopter, create a new service out of it, and see lots and lots of possibilities (often by ignoring real world needs and losing a rational base on decision making),\n" +
+                    "\n" +
+                    "Or you get anxious about what AI could mean to your current role and your future career prospects. The media draws a picture of the world in which developers are forced to use AI to create new software, becoming a prompt operator and ultimately losing their job to the same AI.\n" +
+                    "\n" +
+                    "But this fear of new overt-hyped technology taking away our jobs is not new. In the past many hypes appeared, some of them just vanished, some changed the way we live, communicate, consume media or travel. They can change the world, and so can we.\n" +
+                    "\n" +
+                    "In my talk I want to walk through some generic approaching to handling a hype, how hypes affects our daily work, and what impact hypes may have on our mental stability.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "08:50"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:35"),
+            speaker = speakers[14],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s23",
+            title = "From Web Servers to AI Servants: The Kotlin MCP Revolution",
+            description = "Your servers have been serving humans for decades. Time to teach them to serve AI assistants instead. Explore how Kotlin and MCP create servers that make AI genuinely useful.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:35"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:10"),
+            speaker = speakers[23],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s24",
+            title = "Add Extra Functionality to Supercharge your Flutter Apps with Dart Extensions",
+            description = "Dart extensions are one of the most powerful yet overlooked features in Flutter development. In this talk, we’ll unlock how you can use them to supercharge your Flutter apps—writing cleaner, more maintainable, and more expressive code without modifying existing classes or third-party libraries.\n" +
+                    "\n" +
+                    "Whether you’re extending core types like String or DateTime, enhancing third-party packages, or injecting new life into Flutter widgets, this advanced session will show how Dart extensions can make your codebase smarter, DRYer, and easier to scale.\n" +
+                    "\n" +
+                    "What You’ll Learn:\n" +
+                    "• Custom Power-Ups for Core Types: Add intuitive methods to String, DateTime, List, and others to clean up boilerplate and make your logic more expressive\n" +
+                    "• No-Fork Enhancements: Extend third-party packages and Flutter widgets with your own logic—without modifying their source code\n" +
+                    "• Advanced Patterns: Dive into generic, conditional, and scoped extensions for modular and scalable architecture\n" +
+                    "• When & Why: Learn where Dart extensions outperform mixins, helpers, and even inheritance patterns in terms of performance, readability, and maintainability\n" +
+                    "• Real-World Use Cases: Explore production examples from apps I’ve built—featuring UI extensions, state helpers, and utility methods for cleaner, more maintainable code\n" +
+                    "• Live Demo – Build a Mini Cart App: Watch how all these techniques come together in a live-coded mini shopping cart app, demonstrating how to apply extensions to widgets, logic, and third-party libraries in real time\n" +
+                    "\n" +
+                    "Speaker Bio\n" +
+                    "I’m a passionate Flutter developer, UX thinker, and community speaker with over 5 years of experience building scalable cross-platform apps across fintech, education, and retail. I had the privilege of speaking at the previous Fluttercon Africa, where I shared advanced techniques in Flutter development — and I’m excited to return with even more insights.\n" +
+                    "\n" +
+                    "Beyond Fluttercon, I’ve delivered talks at numerous developer events across Africa on topics like clean architecture, Dart extensions, UI optimization, and real-world app development. You can explore some of my past sessions on my community profile.\n" +
+                    "\n" +
+                    "I love breaking down complex Flutter and Dart concepts into practical, actionable techniques that developers can use right away in their own projects. Whether it’s through the apps I’ve built like Calcut and Eduuka, or through my community talks, I’m always excited to share and learn together.\n" +
+                    "\n" +
+                    "Keywords: Dart Extensions, Flutter Architecture, Code Enhancement, Maintainable Code, Third-Party Packages, Advanced Flutter",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "09:35"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:10"),
+            speaker = speakers[16],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s25",
+            title = "Architecting the API Economy: Building Scalable Digital Partnerships with Mesh Architectures and Com",
+            description = "APIs have become the backbone of digital transformation, powering ecosystems that connect businesses, developers, and customers. As organizations move beyond traditional gateway-centric models, new architectural patterns are reshaping how APIs scale, integrate, and create value.\n" +
+                    "\n" +
+                    "This session dives into API mesh architectures and domain-driven interfaces, showing how they unlock resilience, accelerate partner onboarding, and enable revenue-generating digital partnerships. We will explore GraphQL federation and hybrid event-driven designs that reduce complexity, cut network overhead, and improve developer productivity while maintaining flexibility across distributed systems.\n" +
+                    "\n" +
+                    "Attendees will also learn how to apply runtime governance with service mesh technologies including traffic shaping, circuit breaking, and eBPF-based observability to strengthen reliability at scale. Finally, we’ll highlight how composite API strategies that blend REST, GraphQL, and event-driven paradigms open new monetization paths and ecosystem opportunities.\n",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:50"),
+            speaker = speakers[4],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s26",
+            title = "Distribute your own apps with F-Droid",
+            description = "This workshop aims to teach developers how they can use the F-Droid toolkit to distribute their own apps. The focus will be on fdroidserver - the python cli tool - to set up their own repository and distribute it. Another tool will be Repomaker, the online Django app that makes F-Droid compatible repositories all from a web interface.\n" +
+                    "\n" +
+                    "The workshop will show users how to create their own F-Droid repository and download it onto their devices using any F-Droid client.\n" +
+                    "\n",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:50"),
+            speaker = speakers[4],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s27",
+            title = "Smarter Android: Building Scalable AI-Driven Apps for Startups and Local Businesses",
+            description = "As mobile usage grows across Africa, so does the demand for smarter, scalable Android apps that do more with less. In this session, we’ll explore how startups and indie developers can integrate lightweight yet powerful AI features — from smart recommendations to chat interfaces — using tools like Firebase ML, Gemini APIs, and on-device ML solutions. We’ll walk through how to design architecture that supports growth, even with limited budgets or infrastructure, while keeping performance and user experience at the core. Whether you’re building a delivery app, finance tool, or service marketplace, this talk will equip you with practical tools, design tips, and a scalable mindset to take your Android app to the next level — with AI as your co-pilot.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:50"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:30"),
+            speaker = speakers[22],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s28",
+            title = "Test, Code, Repeat: Mastering AI-Assisted Development",
+            description = "\"Test, Code, Repeat: Master AI-Assisted Development\" is a hands-on workshop that redefines coding by treating AI as your collaborative partner. Discover how iterative workflows—like the ping-pong pairing technique—blend human creativity with AI efficiency to accelerate problem-solving, improve code quality, and spark innovation.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "10:50"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:30"),
+            speaker = speakers[21],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s29",
+            title = "Automated Security at Scale: Real-Time Threat Detection for Resilient Mobile-First Organizations",
+            description = "In today’s digital landscape, cyberattacks are not only growing in frequency but also in sophistication making real-time security automation a necessity rather than an option. This session demonstrates how organizations can transform their security posture by deploying automated, serverless monitoring frameworks that detect and respond to threats within minutes.\n" +
+                    "\n" +
+                    "Using AWS Lambda and managed streaming services, we’ll explore how application logs and bot traffic can be continuously analyzed to identify malicious behavior early. Attendees will see how policy-driven workflows can automatically quarantine suspicious sessions, update firewall rules, and trigger compliance checks significantly reducing the need for manual intervention in low- to medium-severity incidents.\n" +
+                    "\n" +
+                    "Beyond immediate protection, automation also reduces fraud-related losses, accelerates regulatory compliance through built-in auditing, and fosters customer trust. By embedding security controls into developer workflows and democratizing threat visibility across teams, organizations can achieve both operational efficiency and organizational resilience.\n" +
+                    "\n" +
+                    "With practical examples and actionable takeaways, this talk equips developers, architects, and security professionals with scalable frameworks to modernize security operations and safeguard not only their organizations but also the broader digital ecosystem that powers mobile-first commerce.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:25"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:05"),
+            speaker = speakers[17],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s30",
+            title = "From Post-Silicon to Predictive: Smarter In-System Testing for Reliable, Future-Proof SoCs",
+            description = "As modern System-on-Chips (SoCs) power everything from AI applications to autonomous vehicles and cloud-scale infrastructure, ensuring reliability throughout their lifecycle has become mission-critical. Traditional test methods, limited to manufacturing or early bring-up, miss real-world issues that arise under dynamic workloads and environmental stress.\n" +
+                    "\n" +
+                    "This session introduces In-System Test (IST) a runtime approach that executes structural tests directly in deployed silicon without disrupting normal operation. Attendees will learn how advanced techniques such as ATPG and MBIST can be seamlessly integrated into live systems, and how a decoupled test access framework enables flexible test delivery and chip health monitoring.\n" +
+                    "\n" +
+                    "Looking forward, the talk explores the emerging frontier of Predictive IST where real-time test data and failure analytics transform IST from a reactive fault-detection mechanism into a proactive reliability engine. By forecasting silicon degradation and predicting failures before they occur, Predictive IST unlocks new possibilities in predictive maintenance for safety-critical and high-availability systems.\n" +
+                    "\n" +
+                    "Key takeaways:\n" +
+                    "\n" +
+                    "Architectural principles for runtime IST deployment in SoCs\n" +
+                    "\n" +
+                    "Practical challenges and solutions for field integration\n" +
+                    "\n" +
+                    "Using IST data for predictive reliability and lifecycle modeling\n" +
+                    "\n" +
+                    "Strategies for optimizing test scheduling, coverage, and performance\n" +
+                    "\n" +
+                    "This session is tailored for SoC architects, DFT engineers, and reliability professionals seeking to extend silicon lifespan, reduce downtime, and build smarter, more resilient systems.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "11:25"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:05"),
+            speaker = speakers[10],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s31",
+            title = "Go with the Flow",
+            description = "Kotlin Flow is an implementation of Reactive Stream specification made on top of coroutines for Kotlin.\n" +
+                    "\n" +
+                    "In this talk, we will look at Kotlin Flow, it's internals, how to use it with on Android or any other platforms, and share how you can migrate to Flow\n" +
+                    "\n" +
+                    "Agenda\n" +
+                    "- Quick intro to Flow\n" +
+                    "- Internals of Kotlin Flow\n" +
+                    "- Using Flow on Android and other platforms\n" +
+                    "- Why and how to migrate\n" +
+                    "- Working with existing reactive streams ❤ Flow in single codebase\n" +
+                    "- Effectively using Flows with Compose\n" +
+                    "- Magic of multi-platform\n" +
+                    "- Tests\n" +
+                    "- Conclusion\n" +
+                    "\n" +
+                    "You’ll walk away with a clear idea of what Kotlin Flow and how it works internally and h",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:55"),
+            speaker = speakers[1],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s32",
+            title = "Offline-First, AI-Ready: Architecting Mobile Apps That Learn and Sync Smartly",
+            description = "Modern mobile apps must do more than just work. They must work smartly, even when offline. (Think of common applications like Twitter or Instagram.) This talk will walk through building an AI-enhanced, offline-first architecture on Android using Jetpack and custom vector stores. You’ll learn how to integrate on-device LLMs, enable smooth bi-directional sync with backend stores, and adopt scalable syncing patterns used in real-world apps. We’ll also cover sync conflict resolution, data serialization formats, and an efficient approach to user-local data modeling. All without sacrificing performance.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "12:55"),
+            speaker = speakers[20],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s33",
+            title = "Lunch Break",
+            description = "Buffet lunch & networking Sponsor & community showcase",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "01:00"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "02:00"),
+            speaker = null,
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s34",
+            title = "Level Up Your Android Career: Core Skills and Strategies for Growth",
+            description = "In a rapidly evolving tech world, technical skills alone aren’t enough to thrive as an Android developer. This session focuses on the core career skills, mindset shifts, and practical strategies Android developers need to level up professionally and navigate their career growth effectively. Drawing from my extensive experience coaching tech professionals across multiple countries, I’ll guide attendees on how to build essential soft skills, develop a growth mindset, and leverage continuous learning to unlock new opportunities in Android development.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "02:40"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:10"),
+            speaker = speakers[5],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s35",
+            title = "MindCraft: Building Resilience One Line at a Time",
+            description = "As software developers, we often share a passion for gaming and coding, but we are not immune to the mental health challenges that affect many. In this talk, I will explore the intersection of mental health and personal growth through the lens of programming and role-playing games (RPGs). Our heros mental health journey mirrors the process of developing and refining a class in code, while navigating challenges similar to those faced by an RPG character. The process involves identifying weaknesses in the \"code\" of the mind, addressing negative thought patterns, and adapting strategies to overcome emotional obstacles such as anxiety, depression, and self-doubt, much like refactoring code or leveling up in an RPG.\n" +
+                    "\n" +
+                    "Just as in coding, progress in mental health is not linear. Challenges require adjustments and growth, often through trial and error. Each new obstacle demands changes in one's approach, whether in the code or in mindset. Much like an RPG character depends on strong allies to succeed, supporters, true friends and family act as essential \"party members\" in the game of life, offering support, perspective, and encouragement when challenges seem overwhelming.\n" +
+                    "\n" +
+                    "The session aims to raise awareness about mental health and encourage openness in talking about struggles. Attendees will be encouraged to ask for help whenever they need it. With the support of those around us, we can navigate the game of life with more love, laughter, and understanding.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "02:40"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:10"),
+            speaker = speakers[14],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s36",
+            title = "Peer-to-Peer Sync on Android: Building Offline-First Apps That Talk to Each Other",
+            description = "In a world obsessed with cloud connectivity, what if your app could sync data directly with nearby devices, without hitting the cloud? This session introduces peer-to-peer (P2P) sync patterns for Android that enable apps to share data over LAN, Wi-Fi Direct, or BLE. We’ll walk through building resilient, offline-first apps where data flows between devices securely and automatically, perfect for field deployments, disaster zones, or privacy-focused use cases.\n" +
+                    "Whether you’re building a logistics tool, health records app, or multiplayer experience. This talk will show you how to build apps that sync serverlessly!\n" +
+                    "Towards the end, I will also showcase a very futuristic idea, where we will be using mesh topology to text offline just like WhatsApp.\n" +
+                    "\n",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:40"),
+            speaker = speakers[20],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s37",
+            title = "The Hidden Cost of Copy-Paste: Why Your App Should Depend on People, Not Just Code",
+            description = "In today’s fast-paced mobile development, it’s easy to copy-paste code or drop in open source libraries without a second thought but every dependency comes with people, context, and consequences. This talk explores the often-overlooked human side of open source, highlighting the importance of understanding the communities behind the code. Through real-world stories and practical insights, we’ll learn how to evaluate project health, engage with maintainers, and contribute meaningfully, even as consumers. By shifting our mindset from passive use to active participation, we can build more secure, resilient, and collaborative mobile apps.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:10"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:40"),
+            speaker = speakers[13],
+            track = Track.NONE,
+            room = "Visual Spaces",
+            level = null
+        ),
+        Session(
+            id = "s38",
+            title = "Reinventing Insurance with Microservices: API-First Strategies for Faster, Smarter Policy Management",
+            description = "The insurance industry is undergoing a radical shift from legacy systems to modern, API-driven platforms that prioritize speed, scalability, and customer experience. With the global insurtech market projected to reach USD 146.43 billion by 2030, insurers embracing microservices and API-first strategies are setting new benchmarks in digital transformation.\n" +
+                    "\n" +
+                    "By breaking down monolithic platforms into 35–45 microservices, leading carriers have accelerated testing cycles by up to 80% and cut new product launch timelines from 18 months to just a few months. Secure API ecosystems now process nearly two billion monthly transactions across 120–180 active APIs—slashing data errors by 94% and driving system uptime to 99.98%.\n" +
+                    "\n" +
+                    "These modernization efforts are not just technical wins—they transform operations. Automated workflows and real-time data validation have reduced claims processing from 10+ days to under 3, while digital triage routes the majority of claims without human intervention. Massive migrations, such as Allianz’s 28 million policies moved in just 14 months, prove that large-scale change can be achieved without service disruption.\n" +
+                    "\n" +
+                    "This session will equip developers, architects, and tech leaders with actionable strategies for:\n" +
+                    "\n" +
+                    "Designing phased digital transformation roadmaps\n" +
+                    "\n" +
+                    "Building secure, scalable microservices and API-first ecosystems\n" +
+                    "\n" +
+                    "Executing high-volume data migrations with minimal risk\n" +
+                    "\n" +
+                    "Digital transformation in insurance is no longer optional—it’s the foundation for faster underwriting, improved customer experiences, and long-term market leadership.",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:35"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "04:15"),
+            speaker = speakers[8],
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s39",
+            title = "Open Roundtables",
+            description = "",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "03:40"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "04:20"),
+            speaker = null,
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s40",
+            title = "Break",
+            description = "",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "04:15"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "04:30"),
+            speaker = null,
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
+        Session(
+            id = "s41",
+            title = "Open Roundtables",
+            description = "",
+            startTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "04:30"),
+            endTime = TimeZoneUtils.createConferenceDateTime(DAY_2, "05:10"),
+            speaker = null,
+            track = Track.NONE,
+            room = "Auditorium",
+            level = null
+        ),
     )
 }
