@@ -168,6 +168,101 @@ object LocalDataSource {
             bio = "Markus is a seasoned software developer with 30 years of experience, starting as a curious script kiddie and growing into a tech expert. Having witnessed the rapid evolution of the industry, he now shares not only technical insights but also a crucial perspective on mental health in software development. Drawing from his own experiences navigating the highs and lows of a demanding career, Markus delivers honest, thought-provoking talks that encourage open conversations about well-being in tech. His mission is to help developers build not just better software, but also healthier, more sustainable careers.",
             imageUrl = "👨🏿‍💼",
         ),
+        Speaker(
+            id = "16",
+            name = "Mugisa Brian (Cephas)",
+            title = "Innovative Software Engineer",
+            company = "",
+            bio = "Hi, my name is Mugisa Brian, but you can call me Cephas. I'm a software engineer with experience in cross-platform app development, and I'm also passionate about graphics and UX design. I love using my skills to create experiences that make people's lives better. Am glad you checked me out here!",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "17",
+            name = "Pallavi Desai",
+            title = "",
+            company = "Capital One",
+            bio = "Pallavi Desai is a seasoned technology leader with over 15 years of experience delivering scalable solutions in cloud computing, real-time data processing, and cybersecurity on AWS and big data platforms. She specializes in bot protection, and fraud prevention using anomaly modeling, automation, and observability.\n" +
+                    "At Capital One, Pallavi has led cross-functional teams in designing and deploying advanced bot detection systems, embedding security automation into CI/CD pipelines, and leveraging AWS Lambda and Kafka-based log analytics to strengthen organizational resilience. Her work focuses on building secure, cloud-native, and intelligent platforms that enhance incident response, ensure regulatory compliance, and drive innovation.\n" +
+                    "Pallavi holds a Master of Science in Information Systems from Central Michigan University and a Bachelor of Technology in Electronics and Communications Engineering from JNTU, India. She is an AWS Certified Solutions Architect (Professional and Associate) and a named inventor on a U.S. patent for an automated streaming data platform.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "18",
+            name = "Paul Mayero",
+            title = "Open-source believer",
+            company = "",
+            bio = "Paul is an experienced developer with over 5 years of professional experience in software development. He is highly skilled in building scalable and secure web applications using various technologies.\n" +
+                    "\n" +
+                    "Paul is an active member of the open-source community and has contributed to various open-source projects such as F-Droid and Open stack. He is passionate about helping other developers learn and grow, and he enjoys mentoring junior developers and sharing his knowledge and expertise with others.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "19",
+            name = "Priyank Shankar",
+            title = "Android Dev",
+            company = "Mercari",
+            bio = "My Socials -\n" +
+                    "GitHub - https://github.com/shankarpriyank\n" +
+                    "LinkedIn - https://www.linkedin.com/in/shankarpriyank\n" +
+                    "Twitter - https://twitter.com/priyank312002",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "20",
+            name = "Pulkit Midha",
+            title = "Senior Mobile Developer",
+            company = "Couchbase",
+            bio = "Pulkit Midha is a mobile developer and technical evangelist passionate about offline-first architecture, real-time sync, and intelligent client-side experiences. He has worked on cross-platform apps, AR/VR products, and AI-integrated systems. A GSoC alumnus and frequent hackathon winner, Pulkit is focused on building resilient mobile solutions and growing open developer communities.\n" +
+                    "\n",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "21",
+            name = "Roy Wanyoike",
+            title = "Software engineer",
+            company = "",
+            bio = "Software Developer",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "22",
+            name = "Saheed Adewumi",
+            title = "GDE & Co-Founder",
+            company = "QTSolution",
+            bio = "Saheed Adewumi is a Google Developer Expert (GDE) and a leading Community Developer Advocate, specializing in full-stack architecture and multi-cloud engineering. I am deeply committed to building software the right way, leveraging principles like Domain-Driven Design (DDD) and Clean Architecture to ensure mobile and cloud-native solutions are scalable, maintainable, and aligned with core business logic.\n" +
+                    "\n" +
+                    "As Co-founder of QTSolution Services, I operate at the intersection of innovation and infrastructure. My core focus is architecting resilient, multi-cloud native systems and software development.\n" +
+                    "\n" +
+                    "Whether I'm hands-on building with AI, leading advanced technical workshops, or teaching best practices for clean code and architecture, my mission is to translate bold ideas into sustainable technological impact.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "23",
+            name = "Sam Aricha",
+            title = "Mobile Engineer",
+            company = "Intersoft Eagles Systems",
+            bio = "An Engineer who loves to debug and learn.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "24",
+            name = "Sylvia Dieckmann",
+            title = "Mobile App Developer, GDE Flutter/Dart",
+            company = "",
+            bio = "Sylvia is a Google Developer Expert for Flutter/Dart. Her preferred professional role includes some IT management but also enough hands-on development work to keep her dev skills sharp. Her main interest lies in exploring new technologies in the space of mobile apps and web technologies. She is currently playing with Flutter, Firebase, and some ML for Android but might change focus as new technologies pop up. \n" +
+                    "Sylvia divides her time between South Africa and Germany. She is a Women Techmaker (WTM) Ambassador and an active member of the GDG Cape Town chapter. She is a frequent speaker at GDG events and aims to support the developer community through mentoring and events.",
+            imageUrl = "👨🏿‍💼",
+        ),
+        Speaker(
+            id = "25",
+            name = "Zoe Farooq",
+            title = "Engineering Lead",
+            company = "DeliveryHero",
+            bio = "Hi, I am Zoe. A musician by ❤\uFE0F, working as an Engineering Manager at DeliveryHero. Living in Berlin, 'trying' to learn German.",
+            imageUrl = "👨🏿‍💼",
+        ),
+
+
 
 
     )
@@ -203,7 +298,7 @@ object LocalDataSource {
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "10:15"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "10:55"),
             speaker = speakers[0],
-            track = Track.ANDROID,
+            track = Track.NONE,
             room = "Auditorium",
             level = SessionLevel.INTERMEDIATE
         ),
@@ -227,10 +322,10 @@ object LocalDataSource {
                     "- Transform Errors into Insights: Techniques to analyse errors for trends, common issues, and user feedback to enhance development processes.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "11:10"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "11:55"),
-            speaker = speakers[1],
-            track = Track.KOTLIN,
+            speaker = speakers[3],
+            track = Track.NONE,
             room = "Room B",
-            level = SessionLevel.INTERMEDIATE
+            level = null
         ),
         Session(
             id = "s6",
@@ -242,10 +337,10 @@ object LocalDataSource {
                     "You'll learn how Dart enables rapid development cycles while maintaining type safety, see real-world examples of REST implementations, and understand deployment strategies for production environments. Whether you're a backend engineer evaluating new technologies or an API architect seeking productivity gains, this talk provides valuable insights into how Dart can enhance your server-side development toolkit.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "11:10"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "11:55"),
-            speaker = speakers[2],
-            track = Track.KOTLIN,
+            speaker = speakers[9],
+            track = Track.NONE,
             room = "Visual Spaces",
-            level = SessionLevel.ADVANCED
+            level = null
         ),
         Session(
             id = "s7",
@@ -253,10 +348,10 @@ object LocalDataSource {
             description = "HTTP served us well, but AI demands better. Follow Kotlin's evolution from HTTP servers to MCP-powered AI infrastructure that communicates the way artificial intelligence actually thinks.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "12:05"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "12:50"),
-            speaker = speakers[3],
-            track = Track.DESIGN,
+            speaker = speakers[23],
+            track = Track.NONE,
             room = "Auditorium",
-            level = SessionLevel.INTERMEDIATE
+            level = null
         ),
         Session(
             id = "s8",
@@ -272,10 +367,10 @@ object LocalDataSource {
                     "Without limiting the points above, this is just a glimpse of what will be covered during the session; however, more discoveries will be made during this comprehensive session, which covers recent, current, and requested features for Flutter developers.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "12:05"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "12:50"),
-            speaker = speakers[0],
-            track = Track.KEYNOTE,
+            speaker = speakers[7],
+            track = Track.NONE,
             room = "Visual Spaces",
-            level = SessionLevel.BEGINNER
+            level = null
         ),
         Session(
             id = "s9",
@@ -284,7 +379,7 @@ object LocalDataSource {
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "1:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "2:00"),
             speaker = null,
-            track = Track.KEYNOTE,
+            track = Track.NONE,
             room = "Auditorium",
             level = null
         ),
@@ -296,8 +391,8 @@ object LocalDataSource {
                     "Whether you're working in a startup or an enterprise Android team, you'll walk away with actionable ideas to boost your development velocity while keeping confidence high. Let’s break down what it really takes to build CI/CD pipelines that scale with your team and product.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "2:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "2:45"),
-            speaker = speakers[5],
-            track = Track.CLOUD,
+            speaker = speakers[11],
+            track = Track.NONE,
             room = "Auditorium",
             level = null
         ),
@@ -307,8 +402,8 @@ object LocalDataSource {
             description = "Flutter for Mobile is released, Flutter for Web is released, Flutter for macOS, Linux, and Windows is in also released and it's really cool that Flutter officially supports six platforms. But what if I want to run my Flutter app on the TV? Unfortunately, nobody has heard of the official Flutter for TV yet. Actually, a Flutter app can be launched on TV (not AndroidTV only, but AppleTV, Tizen, and others as well). In my talk, I'm going to tell you how to do this, what difficulties and issues you will face, and how to resolve them.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "2:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "2:45"),
-            speaker = null,
-            track = Track.CLOUD,
+            speaker = speakers[15],
+            track = Track.NONE,
             room = "Visual Spaces",
             level = null
         ),
@@ -342,7 +437,7 @@ object LocalDataSource {
                     "In addition to my experience, I believe that my perspective as a woman can contribute meaningfully to this topic. I will do this talk in the Droidcon Berlin this year as well.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "3:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "3:45"),
-            speaker = null,
+            speaker = speakers[25],
             track = Track.NONE,
             room = "Auditorium",
             level = null
@@ -361,7 +456,7 @@ object LocalDataSource {
                     "- Production Considerations: Address model size, device compatibility, privacy, and performance optimization—lessons learned from deploying AI features at scale in consumer and enterprise Android apps.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "3:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "3:45"),
-            speaker = null,
+            speaker = speakers[6],
             track = Track.NONE,
             room = "Visual Spaces",
             level = null
@@ -390,7 +485,7 @@ object LocalDataSource {
                     "\n",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:45"),
-            speaker = null,
+            speaker = speakers[2],
             track = Track.NONE,
             room = "Auditorium",
             level = null
@@ -404,7 +499,7 @@ object LocalDataSource {
                     "\n",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:00"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:45"),
-            speaker = null,
+            speaker = speakers[24],
             track = Track.NONE,
             room = "Auditorium",
             level = null
@@ -418,7 +513,7 @@ object LocalDataSource {
                     "This talk should give a very good idea to the audience about desinging agents",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:45"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "5:30"),
-            speaker = null,
+            speaker = speakers[19],
             track = Track.NONE,
             room = "Auditorium",
             level = null
@@ -439,7 +534,7 @@ object LocalDataSource {
                     "Designing enterprise-grade data stewardship systems that are not just compliant, but business-ready and innovation-ready.",
             startTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "4:45"),
             endTime = TimeZoneUtils.createConferenceDateTime(DAY_1, "5:30"),
-            speaker = null,
+            speaker = speakers[12],
             track = Track.NONE,
             room = "Visual Spaces",
             level = null
