@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Orange background -->
+  <rect width="1024" height="1024" fill="#FA6E50"/>
+
+  <!-- Green gradient overlay -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FA6E50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#43BC6E;stop-opacity:0.4" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#grad)"/>
+
+  <!-- Circle background for DU -->
+  <circle cx="512" cy="512" r="420" fill="#FFFFFF" opacity="0.2"/>
+
+  <!-- "D" Letter -->
+  <g transform="translate(280, 330)">
+    <path d="M0,0 L0,360 L120,360 C200,360 240,300 240,180 C240,60 200,0 120,0 Z M60,60 L120,60 C160,60 180,100 180,180 C180,260 160,300 120,300 L60,300 Z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- "U" Letter -->
+  <g transform="translate(560, 330)">
+    <path d="M0,0 L0,220 C0,300 40,360 120,360 C200,360 240,300 240,220 L240,0 L180,0 L180,220 C180,260 160,300 120,300 C80,300 60,260 60,220 L60,0 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

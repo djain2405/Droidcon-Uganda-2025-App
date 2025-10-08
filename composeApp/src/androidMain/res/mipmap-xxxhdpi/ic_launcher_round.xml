@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+
+    <!-- Orange to Green gradient background -->
+    <path
+        android:fillColor="#FA6E50"
+        android:pathData="M0,0h72v72h-72z"/>
+    <path
+        android:fillColor="#43BC6E"
+        android:pathData="M0,0 L72,72 L72,0 Z"
+        android:fillAlpha="0.4"/>
+
+    <!-- Circle background for DU -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.2"
+        android:pathData="M36,12 C48.89,12 59.33,22.44 59.33,35.33 C59.33,48.22 48.89,58.67 36,58.67 C23.11,58.67 12.67,48.22 12.67,35.33 C12.67,22.44 23.11,12 36,12 Z"/>
+
+    <!-- "D" Letter -->
+    <group
+        android:translateX="18.67"
+        android:translateY="23.33">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M0,0 L0,24 L8,24 C13.33,24 16,20 16,12 C16,4 13.33,0 8,0 Z M4,4 L8,4 C10.67,4 12,6.67 12,12 C12,17.33 10.67,20 8,20 L4,20 Z"/>
+    </group>
+
+    <!-- "U" Letter -->
+    <group
+        android:translateX="37.33"
+        android:translateY="23.33">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M0,0 L0,14.67 C0,20 2.67,24 8,24 C13.33,24 16,20 16,14.67 L16,0 L12,0 L12,14.67 C12,17.33 10.67,20 8,20 C5.33,20 4,17.33 4,14.67 L4,0 Z"/>
+    </group>
+</vector>

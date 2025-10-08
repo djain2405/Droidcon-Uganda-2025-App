@@ -143,12 +143,12 @@ open iosApp/iosApp.xcodeproj
 | Version Set | ✅ | ✅ |
 | Privacy Policy | ✅ | ✅ |
 | Store Listing | ✅ | ✅ |
-| App Icon | ❌ NEEDED | ❌ NEEDED |
+| App Icon | ✅ DONE! | ⚠️ PNG files needed |
 | Signing | ⚠️ Keystore needed | ⚠️ Check account |
 | Screenshots | ❌ NEEDED | ❌ NEEDED |
 | Privacy URL | ⚠️ Host online | ⚠️ Host online |
 
-**Overall**: 🟡 80% Complete - Assets & Signing Needed
+**Overall**: 🟢 85% Complete - Icons Created! Signing & Screenshots Needed
 
 ---
 

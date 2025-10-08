@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Simple iOS Icon Generator for DroidCon Uganda
+# Uses online service - no local dependencies needed!
+
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ICON_DIR="$SCRIPT_DIR/iosApp/iosApp/Assets.xcassets/AppIcon.appiconset"
+
+echo "🎨 DroidCon Uganda - iOS Icon Generator (Simple Method)"
+echo "========================================================="
+echo ""
+echo "This will guide you through creating iOS icons using an online service."
+echo ""
+echo "📋 Step 1: Open the base icon"
+echo "----------------------------"
+echo "Opening base-icon.svg in your browser..."
+echo ""
+
+# Open SVG in browser
+open "$ICON_DIR/base-icon.svg"
+
+sleep 2
+
+echo "📸 Step 2: Create PNG from SVG"
+echo "------------------------------"
+echo ""
+echo "In your browser:"
+echo "  1. Right-click on the icon"
+echo "  2. Select 'Open Image in New Tab'"
+echo "  3. Take a screenshot (Cmd+Shift+4, then Space, then click window)"
+echo "  4. Or: Right-click → 'Save Image As' → save as 'droidcon-uganda-1024.png'"
+echo ""
+echo "Alternative: Convert online at https://cloudconvert.com/svg-to-png"
+echo "  - Upload base-icon.svg"
+echo "  - Set width: 1024, height: 1024"
+echo "  - Download PNG"
+echo ""
+read -p "Press Enter when you have the 1024x1024 PNG ready..."
+
+echo ""
+echo "🌐 Step 3: Generate iOS sizes online"
+echo "------------------------------------"
+echo ""
+echo "Opening AppIcon.co..."
+open "https://appicon.co"
+
+echo ""
+echo "On the AppIcon.co website:"
+echo "  1. Click 'Choose File' or drag your 1024x1024 PNG"
+echo "  2. Check the 'iOS' checkbox"
+echo "  3. Click 'Generate'"
+echo "  4. Download the ZIP file"
+echo ""
+read -p "Press Enter when you've downloaded the ZIP..."
+
+echo ""
+echo "📦 Step 4: Extract and copy icons"
+echo "---------------------------------"
+echo ""
+echo "Likely download location: ~/Downloads/AppIcons.zip"
+echo ""
+echo "Run these commands:"
+echo ""
+echo "  cd ~/Downloads"
+echo "  unzip AppIcons.zip"
+echo "  cp AppIcons/iOS/*.png '$ICON_DIR/'"
+echo ""
+echo "Or manually:"
+echo "  1. Extract the ZIP file"
+echo "  2. Open the 'iOS' folder"
+echo "  3. Copy all PNG files to: $ICON_DIR"
+echo ""
+read -p "Press Enter when icons are copied..."
+
+echo ""
+echo "✅ Setup Complete!"
+echo ""
+echo "🚀 Next steps:"
+echo "  1. Open Xcode:"
+echo "     open iosApp/iosApp.xcodeproj"
+echo ""
+echo "  2. In Xcode project navigator:"
+echo "     - Expand 'iosApp'"
+echo "     - Click on 'Assets.xcassets'"
+echo "     - Click on 'AppIcon'"
+echo "     - Verify all icon slots are filled"
+echo ""
+echo "  3. Build and run:"
+echo "     Product → Run (or Cmd+R)"
+echo ""
+echo "🎉 Your DroidCon Uganda branded icons are ready!"
