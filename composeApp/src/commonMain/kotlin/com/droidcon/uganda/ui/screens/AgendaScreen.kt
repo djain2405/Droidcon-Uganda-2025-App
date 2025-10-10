@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -241,10 +242,21 @@ fun SessionCard(
             session.speaker?.let { speaker ->
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        speaker.imageUrl,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
+                    // Avatar with initials
+                    Surface(
+                        modifier = Modifier.size(48.dp),
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(
+                                text = getInitials(speaker.name),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                    }
                     Spacer(modifier = Modifier.width(8.dp))
                     Column {
                         Text(
@@ -376,10 +388,21 @@ fun SessionDetailDialog(
 
                     item {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                speaker.imageUrl,
-                                style = MaterialTheme.typography.displaySmall
-                            )
+                            // Avatar with initials
+                            Surface(
+                                modifier = Modifier.size(56.dp),
+                                shape = CircleShape,
+                                color = MaterialTheme.colorScheme.primaryContainer
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Text(
+                                        text = getInitials(speaker.name),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                            }
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
                                 Text(
@@ -540,4 +563,18 @@ fun DayChip(
             )
         }
     }
+}
+
+/**
+ * Extracts initials from a full name
+ * Example: "John Doe" -> "JD"
+ */
+private fun getInitials(name: String): String {
+    return name
+        .trim()
+        .split(" ")
+        .filter { it.isNotEmpty() }
+        .take(2)
+        .map { it.first().uppercase() }
+        .joinToString("")
 }

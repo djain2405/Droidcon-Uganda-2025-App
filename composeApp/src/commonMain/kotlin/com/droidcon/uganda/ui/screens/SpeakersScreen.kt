@@ -93,7 +93,7 @@ fun SpeakerCard(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Avatar
+            // Avatar with initials
             Surface(
                 modifier = Modifier.size(64.dp),
                 shape = CircleShape,
@@ -101,8 +101,10 @@ fun SpeakerCard(
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
-                        speaker.imageUrl,
-                        style = MaterialTheme.typography.headlineMedium
+                        text = getInitials(speaker.name),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }
@@ -179,8 +181,10 @@ fun SpeakerDetailDialog(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Text(
-                            speaker.imageUrl,
-                            style = MaterialTheme.typography.headlineMedium
+                            text = getInitials(speaker.name),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 }
@@ -328,4 +332,18 @@ fun SpeakerDetailDialog(
             }
         }
     )
+}
+
+/**
+ * Extracts initials from a full name
+ * Example: "John Doe" -> "JD"
+ */
+private fun getInitials(name: String): String {
+    return name
+        .trim()
+        .split(" ")
+        .filter { it.isNotEmpty() }
+        .take(2)
+        .map { it.first().uppercase() }
+        .joinToString("")
 }
