@@ -40,6 +40,10 @@
 -keep class io.ktor.** { *; }
 -dontwarn io.ktor.**
 
+# Keep SLF4J logging
+-dontwarn org.slf4j.**
+-keep class org.slf4j.** { *; }
+
 # DataStore
 -keep class androidx.datastore.preferences.** { *; }
 

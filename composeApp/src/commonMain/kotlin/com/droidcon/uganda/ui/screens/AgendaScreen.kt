@@ -13,11 +13,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Session
@@ -26,12 +29,31 @@ import com.droidcon.uganda.ui.ConferenceViewModel
 import com.droidcon.uganda.ui.UiState
 import com.droidcon.uganda.utils.TimeZoneUtils
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgendaScreen(viewModel: ConferenceViewModel) {
     var selectedSession by remember { mutableStateOf<Session?>(null) }
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
     val selectedDay by viewModel.selectedDay.collectAsState()
     val sessionsState by viewModel.sessionsState.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    // Pull-to-refresh state
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    // Trigger refresh when pulled
+    LaunchedEffect(pullToRefreshState.isRefreshing) {
+        if (pullToRefreshState.isRefreshing) {
+            viewModel.refreshData()
+        }
+    }
+
+    // Reset pull-to-refresh state when refresh completes
+    LaunchedEffect(isRefreshing) {
+        if (!isRefreshing) {
+            pullToRefreshState.endRefresh()
+        }
+    }
 
     // Get filtered sessions based on selected day
     val displaySessions = remember(selectedDay, viewModel.sessions) {
@@ -49,11 +71,15 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             .toMap()
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
         // Day selector
         if (viewModel.conferenceDays.size > 1) {
             DaySelector(
@@ -121,6 +147,13 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                 }
             }
         }
+        }
+
+        // Pull-to-refresh indicator
+        PullToRefreshContainer(
+            state = pullToRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 
     selectedSession?.let { session ->

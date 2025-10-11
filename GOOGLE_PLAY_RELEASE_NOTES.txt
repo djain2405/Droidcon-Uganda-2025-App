@@ -1,0 +1,10 @@
+🎉 First release of DroidCon Uganda 2025 app!
+
+• Browse conference schedule (Nov 10-11)
+• View speaker profiles & bios
+• Save favorite sessions to My Agenda
+• Session details with times, rooms & tracks
+
+Built with Kotlin Multiplatform for great performance.
+
+Enjoy the conference!

@@ -37,6 +37,9 @@ class ConferenceViewModel(
     private val _selectedDay = MutableStateFlow<String?>(null)
     val selectedDay: StateFlow<String?> = _selectedDay.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     private val _sessionsState = MutableStateFlow<UiState<List<Session>>>(UiState.Loading)
     val sessionsState: StateFlow<UiState<List<Session>>> = _sessionsState.asStateFlow()
 
@@ -88,7 +91,11 @@ class ConferenceViewModel(
     }
 
     fun refreshData() {
-        loadData()
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            loadData()
+            _isRefreshing.value = false
+        }
     }
 
     fun toggleFavorite(sessionId: String) {

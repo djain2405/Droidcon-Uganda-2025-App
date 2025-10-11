@@ -2,6 +2,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +11,13 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinx.serialization)
+}
+
+// Load signing credentials from local.properties
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
 }
 
 kotlin {
@@ -77,23 +86,31 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        create("release") {
+            // Read from local.properties for security
+            // Add these to your local.properties (not committed to git):
+            // signing.storeFile=../droidcon-uganda-release.jks
+            // signing.storePassword=droidcon2025
+            // signing.keyAlias=droidcon-uganda
+            // signing.keyPassword=droidcon2025
+            localProperties.getProperty("signing.storeFile")?.let {
+                storeFile = file(it)
+            }
+            storePassword = localProperties.getProperty("signing.storePassword")
+            keyAlias = localProperties.getProperty("signing.keyAlias")
+            keyPassword = localProperties.getProperty("signing.keyPassword")
+        }
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-    }
-    signingConfigs {
-        create("release") {
-            // For store submission, configure your keystore here
-            // storeFile = file("path/to/your/keystore.jks")
-            // storePassword = "your_store_password"
-            // keyAlias = "your_key_alias"
-            // keyPassword = "your_key_password"
         }
     }
     compileOptions {
