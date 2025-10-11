@@ -18,6 +18,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -53,6 +54,17 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
     LaunchedEffect(isRefreshing) {
         if (!isRefreshing) {
             pullToRefreshState.endRefresh()
+        }
+    }
+
+    // Track current time for all session status updates (single timer for all cards)
+    var currentTime by remember { mutableStateOf(kotlinx.datetime.Clock.System.now()) }
+
+    // Auto-refresh status every minute (runs once at screen level, not per card)
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(60_000) // 60 seconds
+            currentTime = kotlinx.datetime.Clock.System.now()
         }
     }
 
@@ -170,6 +182,7 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                     items(sessionsForDate) { session ->
                         SessionCard(
                             session = session,
+                            currentTime = currentTime,
                             isFavorite = session.id in favoriteIds,
                             onToggleFavorite = { viewModel.toggleFavorite(session.id) },
                             onClick = { selectedSession = session }
@@ -201,6 +214,7 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
 @Composable
 fun SessionCard(
     session: Session,
+    currentTime: kotlinx.datetime.Instant,
     isFavorite: Boolean,
     onToggleFavorite: () -> Unit,
     onClick: () -> Unit
@@ -214,13 +228,26 @@ fun SessionCard(
         )
     )
 
+    // Calculate session status based on passed-in time
+    val sessionStatus = remember(session, currentTime) {
+        TimeZoneUtils.getSessionStatus(session.startTime, session.endTime)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
                 isPressed = true
                 onClick()
-            },
+            }
+            // Reduce opacity for ended sessions
+            .then(
+                if (sessionStatus == com.droidcon.uganda.data.SessionStatus.ENDED) {
+                    Modifier.alpha(0.6f)
+                } else {
+                    Modifier
+                }
+            ),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
@@ -230,6 +257,11 @@ fun SessionCard(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            // Status Badge (prominent position at top)
+            StatusBadge(status = sessionStatus)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             // Time and Track Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -719,6 +751,46 @@ fun EmptySearchState(
                 Text("Clear Search")
             }
         }
+    }
+}
+
+@Composable
+fun StatusBadge(status: com.droidcon.uganda.data.SessionStatus) {
+    val (text, backgroundColor, textColor) = when (status) {
+        com.droidcon.uganda.data.SessionStatus.LIVE_NOW -> Triple(
+            "LIVE NOW",
+            Color(0xFFEF5350), // Red
+            Color.White
+        )
+        com.droidcon.uganda.data.SessionStatus.STARTING_SOON -> Triple(
+            "STARTING SOON",
+            Color(0xFFFF9800), // Amber
+            Color.White
+        )
+        com.droidcon.uganda.data.SessionStatus.UPCOMING -> Triple(
+            "UPCOMING",
+            Color(0xFF66BB6A), // Green
+            Color.White
+        )
+        com.droidcon.uganda.data.SessionStatus.ENDED -> Triple(
+            "ENDED",
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+        )
+    }
+
+    Surface(
+        color = backgroundColor,
+        shape = RoundedCornerShape(6.dp),
+        modifier = Modifier.padding(end = 4.dp)
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            style = MaterialTheme.typography.labelSmall,
+            color = textColor,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 

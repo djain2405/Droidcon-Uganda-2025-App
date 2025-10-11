@@ -44,3 +44,10 @@ enum class SessionLevel {
     INTERMEDIATE,
     ADVANCED
 }
+
+enum class SessionStatus {
+    LIVE_NOW,       // Session is currently happening
+    STARTING_SOON,  // Session starts within 15 minutes
+    UPCOMING,       // Session is in the future
+    ENDED           // Session has already finished
+}

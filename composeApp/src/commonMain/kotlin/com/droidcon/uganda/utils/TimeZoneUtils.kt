@@ -94,4 +94,35 @@ object TimeZoneUtils {
         val userOffset = userTz.offsetAt(now)
         return conferenceOffset == userOffset
     }
+
+    /**
+     * Calculates the session status based on current time
+     */
+    fun getSessionStatus(sessionStartTime: LocalDateTime, sessionEndTime: LocalDateTime): com.droidcon.uganda.data.SessionStatus {
+        // Convert session times (in EAT) to Instant for comparison
+        val startInstant = sessionStartTime.toInstant(CONFERENCE_TIMEZONE)
+        val endInstant = sessionEndTime.toInstant(CONFERENCE_TIMEZONE)
+        val now = Clock.System.now()
+
+        return when {
+            // Session has ended
+            now > endInstant -> com.droidcon.uganda.data.SessionStatus.ENDED
+
+            // Session is currently happening
+            now >= startInstant && now <= endInstant -> com.droidcon.uganda.data.SessionStatus.LIVE_NOW
+
+            // Session starts within 15 minutes
+            now < startInstant && (startInstant - now).inWholeMinutes <= 15 -> com.droidcon.uganda.data.SessionStatus.STARTING_SOON
+
+            // Session is in the future
+            else -> com.droidcon.uganda.data.SessionStatus.UPCOMING
+        }
+    }
+
+    /**
+     * Gets the current time in the user's timezone as LocalDateTime
+     */
+    fun getCurrentUserTime(): LocalDateTime {
+        return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    }
 }

@@ -25,6 +25,17 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
     val selectedDay by viewModel.selectedDay.collectAsState()
     var selectedSession by remember { mutableStateOf<Session?>(null) }
 
+    // Track current time for session status updates
+    var currentTime by remember { mutableStateOf(kotlinx.datetime.Clock.System.now()) }
+
+    // Auto-refresh status every minute
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(60_000) // 60 seconds
+            currentTime = kotlinx.datetime.Clock.System.now()
+        }
+    }
+
     // Filter favorites by selected day
     val favoriteSessions = remember(favoriteIds, selectedDay, viewModel.sessions) {
         val allFavorites = viewModel.sessions.filter { it.id in favoriteIds }
@@ -117,6 +128,7 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                         ) { session ->
                             SessionCard(
                                 session = session,
+                                currentTime = currentTime,
                                 isFavorite = true,
                                 onToggleFavorite = { viewModel.toggleFavorite(session.id) },
                                 onClick = { selectedSession = session }
