@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DroidCon Uganda Brand Colors -->
+    <color name="droidcon_orange">#FFFA6E50</color>
+    <color name="droidcon_green">#FF43BC6E</color>
+    <color name="droidcon_dark_orange">#FFE85A3C</color>
+    <color name="splash_background">#FFFFFFFF</color>
+</resources>

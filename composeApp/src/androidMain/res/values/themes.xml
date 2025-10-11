@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash Screen Theme -->
+    <style name="Theme.DroidConUganda.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/Theme.DroidConUganda</item>
+    </style>
+
+    <!-- Main App Theme -->
+    <style name="Theme.DroidConUganda" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Will use Compose theme colors -->
+    </style>
+</resources>

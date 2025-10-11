@@ -69,34 +69,38 @@ class ConferenceViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            // Load sessions
-            _sessionsState.value = UiState.Loading
-            val sessionsResult = repository.getSessions()
-            _sessionsState.value = sessionsResult.fold(
-                onSuccess = { UiState.Success(it) },
-                onFailure = {
-                    // Fallback to local data on error
-                    UiState.Success(repository.getLocalSessions())
-                }
-            )
-
-            // Load speakers
-            _speakersState.value = UiState.Loading
-            val speakersResult = repository.getSpeakers()
-            _speakersState.value = speakersResult.fold(
-                onSuccess = { UiState.Success(it) },
-                onFailure = {
-                    // Fallback to local data on error
-                    UiState.Success(repository.getLocalSpeakers())
-                }
-            )
+            loadDataSuspend()
         }
+    }
+
+    private suspend fun loadDataSuspend() {
+        // Load sessions
+        _sessionsState.value = UiState.Loading
+        val sessionsResult = repository.getSessions()
+        _sessionsState.value = sessionsResult.fold(
+            onSuccess = { UiState.Success(it) },
+            onFailure = {
+                // Fallback to local data on error
+                UiState.Success(repository.getLocalSessions())
+            }
+        )
+
+        // Load speakers
+        _speakersState.value = UiState.Loading
+        val speakersResult = repository.getSpeakers()
+        _speakersState.value = speakersResult.fold(
+            onSuccess = { UiState.Success(it) },
+            onFailure = {
+                // Fallback to local data on error
+                UiState.Success(repository.getLocalSpeakers())
+            }
+        )
     }
 
     fun refreshData() {
         viewModelScope.launch {
             _isRefreshing.value = true
-            loadData()
+            loadDataSuspend()
             _isRefreshing.value = false
         }
     }

@@ -47,6 +47,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
             implementation("androidx.datastore:datastore-preferences:1.1.1")
+            implementation("androidx.core:core-splashscreen:1.0.1")
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
