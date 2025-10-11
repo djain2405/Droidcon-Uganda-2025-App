@@ -35,6 +35,7 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
     var selectedSession by remember { mutableStateOf<Session?>(null) }
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
     val selectedDay by viewModel.selectedDay.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
     val sessionsState by viewModel.sessionsState.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -55,8 +56,8 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
         }
     }
 
-    // Get filtered sessions based on selected day
-    val displaySessions = remember(selectedDay, viewModel.sessions) {
+    // Get filtered sessions based on selected day and search query
+    val displaySessions = remember(selectedDay, searchQuery, viewModel.sessions) {
         viewModel.getFilteredSessions()
     }
 
@@ -89,6 +90,16 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             )
         }
 
+        // Search bar
+        SearchBar(
+            query = searchQuery,
+            onQueryChange = { viewModel.updateSearchQuery(it) },
+            onClear = { viewModel.clearSearch() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+        )
+
         // Show loading indicator if data is loading
         if (sessionsState is UiState.Loading) {
             Box(
@@ -97,6 +108,12 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             ) {
                 CircularProgressIndicator()
             }
+        } else if (displaySessions.isEmpty()) {
+            // Empty state when search returns no results
+            EmptySearchState(
+                hasSearchQuery = searchQuery.isNotEmpty(),
+                onClearSearch = { viewModel.clearSearch() }
+            )
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -104,12 +121,26 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 item {
-                    Text(
-                        "Conference Schedule",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Conference Schedule",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                        // Show results count when searching
+                        if (searchQuery.isNotEmpty()) {
+                            Text(
+                                "${displaySessions.size} result${if (displaySessions.size != 1) "s" else ""}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
@@ -594,6 +625,99 @@ fun DayChip(
                 fontWeight = FontWeight.ExtraBold,
                 color = contentColor
             )
+        }
+    }
+}
+
+@Composable
+fun SearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onClear: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        modifier = modifier,
+        placeholder = {
+            Text(
+                "Search sessions, speakers, tracks...",
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(onClick = onClear) {
+                    Icon(
+                        Icons.Default.Clear,
+                        contentDescription = "Clear search",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        },
+        singleLine = true,
+        shape = RoundedCornerShape(28.dp),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.secondary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface
+        )
+    )
+}
+
+@Composable
+fun EmptySearchState(
+    hasSearchQuery: Boolean,
+    onClearSearch: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            Icons.Default.Search,
+            contentDescription = null,
+            modifier = Modifier.size(100.dp),
+            tint = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            if (hasSearchQuery) "No Sessions Found" else "No Sessions",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            if (hasSearchQuery) {
+                "Try adjusting your search terms or filters"
+            } else {
+                "No sessions available for the selected day"
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
+        if (hasSearchQuery) {
+            Spacer(modifier = Modifier.height(16.dp))
+            FilledTonalButton(onClick = onClearSearch) {
+                Icon(Icons.Default.Clear, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Clear Search")
+            }
         }
     }
 }

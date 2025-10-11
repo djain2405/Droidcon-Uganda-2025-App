@@ -37,6 +37,9 @@ class ConferenceViewModel(
     private val _selectedDay = MutableStateFlow<String?>(null)
     val selectedDay: StateFlow<String?> = _selectedDay.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
@@ -112,14 +115,41 @@ class ConferenceViewModel(
         _selectedDay.value = day
     }
 
-    // Get sessions filtered by selected day (null = all days)
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    fun clearSearch() {
+        _searchQuery.value = ""
+    }
+
+    // Get sessions filtered by selected day and search query
     fun getFilteredSessions(): List<Session> {
         val day = _selectedDay.value
-        return if (day == null) {
-            sessions
-        } else {
-            sessions.filter { TimeZoneUtils.getDateKey(it.startTime) == day }
+        val query = _searchQuery.value.trim()
+
+        var filtered = sessions
+
+        // Filter by day if selected
+        if (day != null) {
+            filtered = filtered.filter { TimeZoneUtils.getDateKey(it.startTime) == day }
         }
+
+        // Filter by search query if not empty
+        if (query.isNotEmpty()) {
+            filtered = filtered.filter { session ->
+                // Search in session title
+                session.title.contains(query, ignoreCase = true) ||
+                // Search in session description
+                session.description.contains(query, ignoreCase = true) ||
+                // Search in speaker name
+                session.speaker?.name?.contains(query, ignoreCase = true) == true ||
+                // Search in track name
+                session.track.displayName.contains(query, ignoreCase = true)
+            }
+        }
+
+        return filtered
     }
 
     override fun onCleared() {
