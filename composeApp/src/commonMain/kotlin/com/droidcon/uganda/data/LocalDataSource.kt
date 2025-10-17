@@ -18,7 +18,7 @@ object LocalDataSource {
                     "helped 100K+ know about Kotlin, Android, and general programming. Created \"Learn Programming\" initiative helped 500+ people from Egypt, Gulf, UK and more, Joined 1M Arab coders as a mentor,\n" +
                     "currently: Senior Software Tech Lead at Vodafone _VOIS, Previously, worked at HungerStation, Gen. C., and more.\u2028\u2028\n" +
                     "Social Links:\u2028https://linktr.ee/AhmedNMahran",
-            imageUrl = "👩🏿‍💻",
+            imageUrl = "speaker_ahmed_nabil",
             linkedin = "https://linkedIn.com/company/KotlinEgypt"
         ),
         Speaker(
@@ -27,8 +27,8 @@ object LocalDataSource {
             title = "Android Developer",
             company = "Tinder | Co-Author of Kotlin Blueprints",
             bio = "Akshay Chordiya is Google Developer Expert for Android & Kotlin | Android Developer @ Tinder ❤\uFE0F and Kotlin Enthusiast.\n" +
-                    "He is an active community speaker who is mostly found talking about Android and Kotlin. He is an avid blogger and author of “Kotlin Blueprints” book and instructor at Caster.IO",
-            imageUrl = "👨🏿‍💻",
+                    "He is an active community speaker who is mostly found talking about Android and Kotlin. He is an avid blogger and author of \"Kotlin Blueprints\" book and instructor at Caster.IO",
+            imageUrl = "speaker_akshay_chordiya",
         ),
         Speaker(
             id = "2",
@@ -44,7 +44,7 @@ object LocalDataSource {
                     "Achieved 'High Impact' rating at PlayStation for three consecutive years (top 10% in department)\n" +
                     "Reduced user onboarding time by 60% through automated solutions\n" +
                     "Anjan holds a Master's in Information Security and Artificial Intelligence from Ferris State University and maintains current certifications in Identity Governance and Product Management. His combination of technical expertise, strategic vision, and proven track record in scaling IAM operations makes him a recognized thought leader in cloud identity governance and enterprise security frameworks.",
-            imageUrl = "👩🏿‍🎨",
+            imageUrl = "speaker_anjan_kumar_kaleru",
         ),
         Speaker(
             id = "3",
@@ -56,7 +56,7 @@ object LocalDataSource {
                     "I am a Sr. Android Engineer at Snapp Mobile Germany.\n" +
                     "Everyday making people's life easier using tech.\n" +
                     "\n",
-            imageUrl = "👨🏿‍🔬",
+            imageUrl = "speaker_anselmo_alexandre",
         ),
         Speaker(
             id = "4",
@@ -66,8 +66,8 @@ object LocalDataSource {
             bio = "Arun Kambhammettu is a seasoned software engineering leader with extensive experience in architecting, designing, and deploying scalable, high-performing applications across web, mobile, and cloud platforms. With a strong background in full-stack development, distributed systems, AdTech, and data-driven solutions, he has successfully led engineering teams to deliver enterprise-grade applications and cutting-edge products across diverse industries, including hospitality, travel, automotive, and streaming media.\n" +
                     "Currently, Arun serves as a Software Engineering Manager at Amazon (AWS Connect), leading a cross-functional team of software and ML engineers to build advanced customer data solutions. He drives initiatives in customer profiling, data mapping, and ML-based segmentation for prominent clients, including United Airlines, Nova Scotia, and Anthology, delivering AI-powered insights and unified 360° customer views.\n" +
                     "Previously, as a Senior Engineering Manager at Warner Bros. Discovery, Arun oversaw five teams spanning Web, Mobile, AdTech, SEO, and Operations for MotorTrend.com, a platform reaching over 130 million monthly users. His leadership enabled the development of highly scalable digital products, AI-driven personalization, and subscription models that significantly increased user engagement and revenue. Arun has also held pivotal roles at Truckstop.com, AccuRadio, and other organizations, where he spearheaded cloud migrations, introduced machine learning for fraud detection, enhanced DevOps and CICD pipelines, and architected next-gen applications for iOS, Android, and web platforms.\n" +
-                    "A hands-on technologist, Arun is proficient in C#, Python, Node.js, React, Next.js, and major cloud services (AWS, GCP, Azure). He holds a Master’s degree in Management Information Systems from Utah State University and is a certified Microsoft .NET and Azure professional. His passion lies in leveraging AI, data, and cloud-native architectures to build products that are secure, scalable, and impactful.",
-            imageUrl = "👩🏿‍🏫",
+                    "A hands-on technologist, Arun is proficient in C#, Python, Node.js, React, Next.js, and major cloud services (AWS, GCP, Azure). He holds a Master's degree in Management Information Systems from Utah State University and is a certified Microsoft .NET and Azure professional. His passion lies in leveraging AI, data, and cloud-native architectures to build products that are secure, scalable, and impactful.",
+            imageUrl = "speaker_arun_kambhammettu",
         ),
         Speaker(
             id = "5",
@@ -75,7 +75,7 @@ object LocalDataSource {
             title = "Career Coach & Talent Strategist",
             company = "Kazini Consults | Empowering Tech Professionals to Level Up",
             bio = "Caroline Nicole Letaru is a seasoned Career Coach and Talent Strategist at Kazini Consults, with over 6+ years of experience empowering tech professionals across 12 countries. She specializes in helping developers and tech talents elevate their careers through skill development, strategic career planning, and effective talent sourcing. With a strong background in technical recruiting and HR management, Nicole has successfully guided hundreds of professionals to build core skills, navigate career transitions, and achieve measurable career growth in the dynamic tech industry.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_caroline_nicole_letaru",
         ),
         Speaker(
             id = "6",
@@ -83,7 +83,7 @@ object LocalDataSource {
             title = "Product Engineer",
             company = "Strollby | Android developer | Jetpack compose | Kotlin | Flutter",
             bio = "Crafting mobile apps with compose & kotlin",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_dinoy_raj",
         ),
         Speaker(
             id = "7",
@@ -91,7 +91,7 @@ object LocalDataSource {
             title = "Mobile Engineer",
             company = "FlutterFire | AI Enthusiast | Community Lead",
             bio = "Crafting mobile apps with compose & kotlin",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_georges_byona",
         ),
         Speaker(
             id = "8",
@@ -100,7 +100,7 @@ object LocalDataSource {
             company = "Infosys McCamish",
             bio = "Indu Priya Uppala is a highly accomplished Project and Product Manager with over 16 years of experience delivering transformative technology solutions across the insurance, telecommunications, and logistics industries. Currently pursuing an Executive MBA at Georgia Tech, she brings a unique combination of strategic leadership and deep technical expertise to drive large-scale digital transformation initiatives. Indu has spearheaded end-to-end programs for major insurers, including the successful migration of millions of active and inactive policies, the implementation of Salesforce-driven agent portals, microservices-based architectures, and secure API ecosystems that enhance policy lifecycle management. Her experience includes leading cross-functional teams of 20–25 members across onshore and offshore models, orchestrating data governance, UAT, and large-scale system integrations to optimize performance and ensure regulatory compliance. Recognized for her ability to combine innovation with operational excellence, she has delivered measurable outcomes such as cutting claims processing times by more than 70%, streamlining agent workflows, and improving overall system reliability for Fortune 500 clients like John Hancock, TIAA CREF, and MetLife. With expertise spanning Java development, cloud platforms like AWS and Azure, and advanced DevOps practices, Indu excels at transforming complex legacy ecosystems into agile, scalable digital environments. Passionate about mentoring teams and fostering collaboration, she is committed to helping organizations achieve sustainable growth, operational efficiency, and a competitive edge through technology-driven solutions.\n" +
                     "\n",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_indu_priya_uppala",
         ),
         Speaker(
             id = "9",
@@ -113,7 +113,7 @@ object LocalDataSource {
                     "\n" +
                     "Passionate about empowering developers, Jamiu blends technical expertise with community leadership to drive growth, learning, and impact across the Flutter ecosystem.\n" +
                     "\n",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_jamiu_okanlawon",
         ),
         Speaker(
             id = "10",
@@ -123,7 +123,7 @@ object LocalDataSource {
             bio = "Jayesh Kumar Pandey is a Senior DFT Methodology Engineer with over 18 years of experience in semiconductor design, Design-for-Test (DFT), In-System Test (IST), and system-level validation for advanced System-on-Chip (SoC) solutions. He currently leads innovation efforts at a leading semiconductor company in Santa Clara.\n" +
                     "An IETE Fellow, SCRS Fellow, and IEEE Senior Member, Jayesh has pioneered industry-first advancements in scalable, safety-compliant IST frameworks and DFT architectures significantly enhancing chip reliability and reducing time-to-market. His work has resulted in a U.S. patent on in-system test execution and several peer-reviewed publications.\n" +
                     "He actively contributes to the research community as a technical program committee (TPC) member and reviewer for top-tier conferences such as ITC, DFTS, and AIC. Jayesh is also a frequent invited speaker on topics related to reliable AI and robotics SoCs.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_jayesh_kumar_pandey",
         ),
         Speaker(
             id = "11",
@@ -131,7 +131,7 @@ object LocalDataSource {
             title = "Android Engineer",
             company = "Transsion Kenya",
             bio = "Joshua Musyoki is an Android Engineer at Transsion Kenya, where he crafts clean and scalable mobile solutions used by real users. He builds not just for developers, but for real users — with a strong focus on performance, usability, and impact at scale. Passionate about developer tools, open-source, and clean architecture, Joshua is currently exploring how to simplify Android development by building reusable libraries and improving developer experience (DX). A firm believer in continuous learning, he’s always evolving — whether it’s through mentoring, contributing to community projects, or staying on the edge of Android’s ever-growing ecosystem. For Joshua, it’s all about building for builders — and making tools that matter.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_joshua_musyoki",
         ),
         Speaker(
             id = "12",
@@ -141,7 +141,7 @@ object LocalDataSource {
             bio = "Joydip Basu is a seasoned IT leader with over 19 years of expertise in SAP enterprise solutions, specializing in global program execution and digital transformation within the healthcare and life sciences sectors. He is widely recognized for leading cross-functional teams across geographies and delivering large-scale ERP implementations, including SAP S/4HANA, ECC Suite on HANA, APO, and GTS, seamlessly integrated with cloud platforms such as Salesforce, AWS, and MuleSoft.\n" +
                     "Throughout his career, Joydip has architected and executed end-to-end ERP transformations that drive operational excellence, regulatory compliance, and process optimization for global enterprises. His work consistently meets stringent regulatory standards such as FDA and HIPAA, ensuring IT system readiness in highly regulated, mission-critical environments.\n" +
                     "Joydip’s portfolio includes leadership roles in strategic initiatives at industry leaders including Gilead Sciences, Jabil Healthcare, IBM, and Tata Steel. He holds a Master’s degree in Business Administration and is SAP-certified in Supply Chain Management. With a unique combination of strategic insight and technical depth, Joydip is committed to delivering innovative, high-impact solutions that enable organizations to scale, modernize, and thrive in dynamic markets.\n",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_joydip_basu",
         ),
         Speaker(
             id = "13",
@@ -150,7 +150,7 @@ object LocalDataSource {
             company = "",
             bio = "I'm a passionate Mobile Developer with a strong focus on Kotlin and Kotlin Multiplatform. I’ve spent the last few years building high-quality Android apps and cross-platform solutions that prioritize clean architecture, great user experiences, and scalable codebases. I’m also a strong advocate for open source, and I enjoy exploring how community-driven libraries can accelerate mobile development and bring developers together.\n" +
                     "\n",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_kenneth_mathari",
         ),
         Speaker(
             id = "14",
@@ -158,7 +158,7 @@ object LocalDataSource {
             title = "Software Craftsman",
             company = "iits consulting",
             bio = "Markus is a seasoned software developer with 30 years of experience, starting as a curious script kiddie and growing into a tech expert. Having witnessed the rapid evolution of the industry, he now shares not only technical insights but also a crucial perspective on mental health in software development. Drawing from his own experiences navigating the highs and lows of a demanding career, Markus delivers honest, thought-provoking talks that encourage open conversations about well-being in tech. His mission is to help developers build not just better software, but also healthier, more sustainable careers.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_markus_wendland",
         ),
         Speaker(
             id = "15",
@@ -166,7 +166,7 @@ object LocalDataSource {
             title = "Software Craftsman",
             company = "iits consulting",
             bio = "Markus is a seasoned software developer with 30 years of experience, starting as a curious script kiddie and growing into a tech expert. Having witnessed the rapid evolution of the industry, he now shares not only technical insights but also a crucial perspective on mental health in software development. Drawing from his own experiences navigating the highs and lows of a demanding career, Markus delivers honest, thought-provoking talks that encourage open conversations about well-being in tech. His mission is to help developers build not just better software, but also healthier, more sustainable careers.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_mrinal_jain",
         ),
         Speaker(
             id = "16",
@@ -174,7 +174,7 @@ object LocalDataSource {
             title = "Innovative Software Engineer",
             company = "",
             bio = "Hi, my name is Mugisa Brian, but you can call me Cephas. I'm a software engineer with experience in cross-platform app development, and I'm also passionate about graphics and UX design. I love using my skills to create experiences that make people's lives better. Am glad you checked me out here!",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_mugisa_brian",
         ),
         Speaker(
             id = "17",
@@ -184,7 +184,7 @@ object LocalDataSource {
             bio = "Pallavi Desai is a seasoned technology leader with over 15 years of experience delivering scalable solutions in cloud computing, real-time data processing, and cybersecurity on AWS and big data platforms. She specializes in bot protection, and fraud prevention using anomaly modeling, automation, and observability.\n" +
                     "At Capital One, Pallavi has led cross-functional teams in designing and deploying advanced bot detection systems, embedding security automation into CI/CD pipelines, and leveraging AWS Lambda and Kafka-based log analytics to strengthen organizational resilience. Her work focuses on building secure, cloud-native, and intelligent platforms that enhance incident response, ensure regulatory compliance, and drive innovation.\n" +
                     "Pallavi holds a Master of Science in Information Systems from Central Michigan University and a Bachelor of Technology in Electronics and Communications Engineering from JNTU, India. She is an AWS Certified Solutions Architect (Professional and Associate) and a named inventor on a U.S. patent for an automated streaming data platform.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_pallavi_desai",
         ),
         Speaker(
             id = "18",
@@ -194,7 +194,7 @@ object LocalDataSource {
             bio = "Paul is an experienced developer with over 5 years of professional experience in software development. He is highly skilled in building scalable and secure web applications using various technologies.\n" +
                     "\n" +
                     "Paul is an active member of the open-source community and has contributed to various open-source projects such as F-Droid and Open stack. He is passionate about helping other developers learn and grow, and he enjoys mentoring junior developers and sharing his knowledge and expertise with others.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_paul_mayero",
         ),
         Speaker(
             id = "19",
@@ -205,7 +205,7 @@ object LocalDataSource {
                     "GitHub - https://github.com/shankarpriyank\n" +
                     "LinkedIn - https://www.linkedin.com/in/shankarpriyank\n" +
                     "Twitter - https://twitter.com/priyank312002",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_priyank_shankar",
         ),
         Speaker(
             id = "20",
@@ -214,7 +214,7 @@ object LocalDataSource {
             company = "Couchbase",
             bio = "Pulkit Midha is a mobile developer and technical evangelist passionate about offline-first architecture, real-time sync, and intelligent client-side experiences. He has worked on cross-platform apps, AR/VR products, and AI-integrated systems. A GSoC alumnus and frequent hackathon winner, Pulkit is focused on building resilient mobile solutions and growing open developer communities.\n" +
                     "\n",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_pulkit_midha",
         ),
         Speaker(
             id = "21",
@@ -222,7 +222,7 @@ object LocalDataSource {
             title = "Software engineer",
             company = "",
             bio = "Software Developer",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_roy_wanyoike",
         ),
         Speaker(
             id = "22",
@@ -234,7 +234,7 @@ object LocalDataSource {
                     "As Co-founder of QTSolution Services, I operate at the intersection of innovation and infrastructure. My core focus is architecting resilient, multi-cloud native systems and software development.\n" +
                     "\n" +
                     "Whether I'm hands-on building with AI, leading advanced technical workshops, or teaching best practices for clean code and architecture, my mission is to translate bold ideas into sustainable technological impact.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_saheed_adewumi",
         ),
         Speaker(
             id = "23",
@@ -242,7 +242,7 @@ object LocalDataSource {
             title = "Mobile Engineer",
             company = "Intersoft Eagles Systems",
             bio = "An Engineer who loves to debug and learn.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_sam_aricha",
         ),
         Speaker(
             id = "24",
@@ -251,7 +251,7 @@ object LocalDataSource {
             company = "",
             bio = "Sylvia is a Google Developer Expert for Flutter/Dart. Her preferred professional role includes some IT management but also enough hands-on development work to keep her dev skills sharp. Her main interest lies in exploring new technologies in the space of mobile apps and web technologies. She is currently playing with Flutter, Firebase, and some ML for Android but might change focus as new technologies pop up. \n" +
                     "Sylvia divides her time between South Africa and Germany. She is a Women Techmaker (WTM) Ambassador and an active member of the GDG Cape Town chapter. She is a frequent speaker at GDG events and aims to support the developer community through mentoring and events.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_sylvia_dieckmann",
         ),
         Speaker(
             id = "25",
@@ -259,7 +259,7 @@ object LocalDataSource {
             title = "Engineering Lead",
             company = "DeliveryHero",
             bio = "Hi, I am Zoe. A musician by ❤\uFE0F, working as an Engineering Manager at DeliveryHero. Living in Berlin, 'trying' to learn German.",
-            imageUrl = "👨🏿‍💼",
+            imageUrl = "speaker_zoe_farooq",
         ),
 
 

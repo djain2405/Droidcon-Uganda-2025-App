@@ -2,6 +2,7 @@ package com.droidcon.uganda.ui.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,11 +17,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Speaker
 import com.droidcon.uganda.ui.ConferenceViewModel
 import com.droidcon.uganda.utils.TimeZoneUtils
+import org.jetbrains.compose.resources.painterResource
+import droidconuganda.composeapp.generated.resources.*
 
 @Composable
 fun SpeakersScreen(viewModel: ConferenceViewModel) {
@@ -93,21 +97,15 @@ fun SpeakerCard(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Avatar with initials
-            Surface(
-                modifier = Modifier.size(64.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Text(
-                        text = getInitials(speaker.name),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
+            // Speaker photo
+            Image(
+                painter = painterResource(getSpeakerImageResource(speaker.imageUrl)),
+                contentDescription = speaker.name,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
 
             Spacer(modifier = Modifier.width(16.dp))
 
@@ -174,20 +172,14 @@ fun SpeakerDetailDialog(
         onDismissRequest = onDismiss,
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Surface(
-                    modifier = Modifier.size(56.dp),
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primaryContainer
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(
-                            text = getInitials(speaker.name),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-                }
+                Image(
+                    painter = painterResource(getSpeakerImageResource(speaker.imageUrl)),
+                    contentDescription = speaker.name,
+                    modifier = Modifier
+                        .size(56.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(speaker.name, style = MaterialTheme.typography.titleLarge)
@@ -346,4 +338,40 @@ private fun getInitials(name: String): String {
         .take(2)
         .map { it.first().uppercase() }
         .joinToString("")
+}
+
+/**
+ * Maps speaker imageUrl string to the actual drawable resource
+ */
+@Composable
+private fun getSpeakerImageResource(imageUrl: String): org.jetbrains.compose.resources.DrawableResource {
+    return when (imageUrl) {
+        "speaker_ahmed_nabil" -> Res.drawable.speaker_ahmed_nabil
+        "speaker_akshay_chordiya" -> Res.drawable.speaker_akshay_chordiya
+        "speaker_anjan_kumar_kaleru" -> Res.drawable.speaker_anjan_kumar_kaleru
+        "speaker_anselmo_alexandre" -> Res.drawable.speaker_anselmo_alexandre
+        "speaker_arun_kambhammettu" -> Res.drawable.speaker_arun_kambhammettu
+        "speaker_caroline_nicole_letaru" -> Res.drawable.speaker_caroline_nicole_letaru
+        "speaker_dinoy_raj" -> Res.drawable.speaker_dinoy_raj
+        "speaker_georges_byona" -> Res.drawable.speaker_georges_byona
+        "speaker_indu_priya_uppala" -> Res.drawable.speaker_indu_priya_uppala
+        "speaker_jamiu_okanlawon" -> Res.drawable.speaker_jamiu_okanlawon
+        "speaker_jayesh_kumar_pandey" -> Res.drawable.speaker_jayesh_kumar_pandey
+        "speaker_joshua_musyoki" -> Res.drawable.speaker_joshua_musyoki
+        "speaker_joydip_basu" -> Res.drawable.speaker_joydip_basu
+        "speaker_kenneth_mathari" -> Res.drawable.speaker_kenneth_mathari
+        "speaker_markus_wendland" -> Res.drawable.speaker_markus_wendland
+        "speaker_mrinal_jain" -> Res.drawable.speaker_mrinal_jain
+        "speaker_mugisa_brian" -> Res.drawable.speaker_mugisa_brian
+        "speaker_pallavi_desai" -> Res.drawable.speaker_pallavi_desai
+        "speaker_paul_mayero" -> Res.drawable.speaker_paul_mayero
+        "speaker_priyank_shankar" -> Res.drawable.speaker_priyank_shankar
+        "speaker_pulkit_midha" -> Res.drawable.speaker_pulkit_midha
+        "speaker_roy_wanyoike" -> Res.drawable.speaker_roy_wanyoike
+        "speaker_saheed_adewumi" -> Res.drawable.speaker_saheed_adewumi
+        "speaker_sam_aricha" -> Res.drawable.speaker_sam_aricha
+        "speaker_sylvia_dieckmann" -> Res.drawable.speaker_sylvia_dieckmann
+        "speaker_zoe_farooq" -> Res.drawable.speaker_zoe_farooq
+        else -> Res.drawable.speaker_ahmed_nabil // fallback
+    }
 }
