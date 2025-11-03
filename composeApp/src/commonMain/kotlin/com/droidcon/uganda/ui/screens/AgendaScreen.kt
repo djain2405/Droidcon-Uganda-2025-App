@@ -33,6 +33,7 @@ import com.droidcon.uganda.ui.UiState
 import com.droidcon.uganda.utils.TimeZoneUtils
 import org.jetbrains.compose.resources.painterResource
 import droidconuganda.composeapp.generated.resources.*
+import coil3.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -343,8 +344,8 @@ fun SessionCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Speaker photo
-                    Image(
-                        painter = painterResource(getSpeakerImageResource(speaker.imageUrl)),
+                    SpeakerImage(
+                        imageUrl = speaker.imageUrl,
                         contentDescription = speaker.name,
                         modifier = Modifier
                             .size(48.dp)
@@ -483,8 +484,8 @@ fun SessionDetailDialog(
                     item {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             // Speaker photo
-                            Image(
-                                painter = painterResource(getSpeakerImageResource(speaker.imageUrl)),
+                            SpeakerImage(
+                                imageUrl = speaker.imageUrl,
                                 contentDescription = speaker.name,
                                 modifier = Modifier
                                     .size(56.dp)
@@ -798,6 +799,49 @@ private fun getInitials(name: String): String {
         .take(2)
         .map { it.first().uppercase() }
         .joinToString("")
+}
+
+/**
+ * Displays speaker image from URL (Sessionize) or local drawable resource
+ */
+@Composable
+private fun SpeakerImage(
+    imageUrl: String,
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop
+) {
+    // Check if imageUrl is a URL (from Sessionize) or a local resource name
+    val isUrl = imageUrl.isNotBlank() && (
+        imageUrl.startsWith("http://", ignoreCase = true) ||
+        imageUrl.startsWith("https://", ignoreCase = true)
+    )
+
+    if (isUrl) {
+        // Load from network using Coil with error handling
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = contentDescription,
+            modifier = modifier,
+            contentScale = contentScale,
+            error = painterResource(Res.drawable.speaker_ahmed_nabil),
+            placeholder = painterResource(Res.drawable.speaker_ahmed_nabil),
+            onError = { error ->
+                println("❌ Error loading speaker image: ${error.result.throwable.message}")
+            },
+            onSuccess = {
+                println("✅ Successfully loaded speaker image")
+            }
+        )
+    } else {
+        // Load from local drawable resources
+        Image(
+            painter = painterResource(getSpeakerImageResource(imageUrl)),
+            contentDescription = contentDescription,
+            modifier = modifier,
+            contentScale = contentScale
+        )
+    }
 }
 
 /**
