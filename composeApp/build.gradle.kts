@@ -81,8 +81,8 @@ android {
         applicationId = "com.droidcon.uganda"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 3
-        versionName = "1.1.1"
+        versionCode = 5
+        versionName = "1.1.3"
     }
     packaging {
         resources {

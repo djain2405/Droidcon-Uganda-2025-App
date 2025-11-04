@@ -214,9 +214,15 @@ fun SpeakerDetailDialog(
                     item {
                         HorizontalDivider()
                         Spacer(modifier = Modifier.height(4.dp))
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
                             speaker.twitter?.let {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Icon(
                                         Icons.Default.Share,
                                         contentDescription = null,
@@ -227,12 +233,16 @@ fun SpeakerDetailDialog(
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.secondary
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.weight(1f)
                                     )
                                 }
                             }
                             speaker.linkedin?.let {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Icon(
                                         Icons.Default.AccountCircle,
                                         contentDescription = null,
@@ -243,7 +253,8 @@ fun SpeakerDetailDialog(
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.secondary
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.weight(1f)
                                     )
                                 }
                             }

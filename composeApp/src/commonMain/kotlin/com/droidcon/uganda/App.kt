@@ -129,8 +129,10 @@ fun AboutDialog(onDismiss: () -> Unit) {
                     "Join Uganda's premier Android developer conference! " +
                     "Connect with fellow developers, learn from industry experts, " +
                     "and discover the latest in Android development.\n\n" +
-                    "📅 Date: August 15, 2025\n" +
-                    "📍 Location: Kampala, Uganda\n" +
+                    "📅 Date: November 10-11, 2025\n" +
+                    "📍 Venue: NATIONAL ICT INNOVATION HUB\n" +
+                    "Kampala, Uganda\n" +
+                    "🗺️ https://maps.app.goo.gl/wLGMw7RDYveeXZZa7\n" +
                     "🕐 Conference Timezone: East Africa Time (EAT, UTC+3)\n\n" +
                     if (isLocalTime) {
                         "⏰ Times shown in your timezone ($userTimezoneName)\n" +
