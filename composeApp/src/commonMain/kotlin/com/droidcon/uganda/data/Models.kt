@@ -20,8 +20,8 @@ data class Session(
     val id: String,
     val title: String,
     val description: String,
-    val startTime: LocalDateTime,  // Now uses LocalDateTime
-    val endTime: LocalDateTime,    // Now uses LocalDateTime
+    val startTime: LocalDateTime? = null,
+    val endTime: LocalDateTime? = null,
     val speaker: Speaker? = null,  // Optional - some sessions may not have a specific speaker
     val track: Track,
     val room: String,

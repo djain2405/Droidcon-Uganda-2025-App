@@ -1,11 +1,7 @@
 package com.droidcon.uganda
 
-import coil3.ImageLoader
-import coil3.PlatformContext
 import coil3.SingletonImageLoader
-import coil3.disk.DiskCache
-import coil3.memory.MemoryCache
-import okio.FileSystem
+import com.droidcon.uganda.utils.ImageLoaderFactory
 
 /**
  * Initialize Coil ImageLoader for iOS
@@ -14,21 +10,8 @@ fun initializeImageLoader() {
     try {
         println("🎨 Initializing Coil ImageLoader for iOS")
 
-        // Set up the singleton ImageLoader
-        SingletonImageLoader.setSafe {
-            ImageLoader.Builder(PlatformContext.INSTANCE)
-                .memoryCache {
-                    MemoryCache.Builder()
-                        .maxSizePercent(PlatformContext.INSTANCE, percent = 0.25)
-                        .build()
-                }
-                .diskCache {
-                    DiskCache.Builder()
-                        .directory(FileSystem.SYSTEM_TEMPORARY_DIRECTORY / "image_cache")
-                        .maxSizeBytes(512L * 1024 * 1024) // 512MB
-                        .build()
-                }
-                .build()
+        SingletonImageLoader.setSafe { context ->
+            ImageLoaderFactory.create(context)
         }
 
         println("✅ Coil ImageLoader initialized successfully")

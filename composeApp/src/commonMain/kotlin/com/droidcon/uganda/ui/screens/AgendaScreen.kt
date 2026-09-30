@@ -78,15 +78,20 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
         viewModel.getFilteredSessions()
     }
 
-    // Group sessions by date
     val sessionsByDate = remember(displaySessions) {
         displaySessions
+            .filter { it.startTime != null }
             .groupBy { session ->
-                TimeZoneUtils.getDateKey(session.startTime)
+                TimeZoneUtils.getDateKey(session.startTime!!)
             }
             .toList()
             .sortedBy { it.first }
             .toMap()
+    }
+    val unscheduledSessions = remember(displaySessions) {
+        displaySessions
+            .filter { it.startTime == null }
+            .sortedBy { it.title }
     }
 
     Box(
@@ -138,27 +143,33 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 item {
-                    Row(
+                    Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        color = MaterialTheme.colorScheme.tertiary,
+                        shape = RoundedCornerShape(16.dp)
                     ) {
-                        Text(
-                            "Conference Schedule",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                        // Show results count when searching
-                        if (searchQuery.isNotEmpty()) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
-                                "${displaySessions.size} result${if (displaySessions.size != 1) "s" else ""}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                "Conference Schedule",
+                                style = MaterialTheme.typography.headlineMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onTertiary
                             )
+                            if (searchQuery.isNotEmpty()) {
+                                Text(
+                                    "${displaySessions.size} result${if (displaySessions.size != 1) "s" else ""}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onTertiary
+                                )
+                            }
                         }
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
                 for ((dateKey, sessionsForDate) in sessionsByDate.entries) {
@@ -166,11 +177,11 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                     if (selectedDay == null) {
                         item {
                             val firstSession = sessionsForDate.first()
-                            val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
+                            val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime!!)
 
                             Surface(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.primaryContainer,
+                                color = MaterialTheme.colorScheme.primary,
                                 shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text(
@@ -178,13 +189,40 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
                                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                                     style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
                             }
                         }
                     }
 
                     items(sessionsForDate) { session ->
+                        SessionCard(
+                            session = session,
+                            currentTime = currentTime,
+                            isFavorite = session.id in favoriteIds,
+                            onToggleFavorite = { viewModel.toggleFavorite(session.id) },
+                            onClick = { selectedSession = session }
+                        )
+                    }
+                }
+
+                if (unscheduledSessions.isNotEmpty()) {
+                    item {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(
+                                "Schedule coming soon",
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
+                    }
+                    items(unscheduledSessions) { session ->
                         SessionCard(
                             session = session,
                             currentTime = currentTime,
@@ -233,9 +271,14 @@ fun SessionCard(
         )
     )
 
-    // Calculate session status based on passed-in time
     val sessionStatus = remember(session, currentTime) {
-        TimeZoneUtils.getSessionStatus(session.startTime, session.endTime)
+        val start = session.startTime
+        val end = session.endTime
+        if (start != null && end != null) {
+            TimeZoneUtils.getSessionStatus(start, end)
+        } else {
+            null
+        }
     }
 
     Card(
@@ -256,16 +299,16 @@ fun SessionCard(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
         )
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Status Badge (prominent position at top)
-            StatusBadge(status = sessionStatus)
-
-            Spacer(modifier = Modifier.height(8.dp))
+            if (sessionStatus != null) {
+                StatusBadge(status = sessionStatus)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
 
             // Time and Track Header
             Row(
@@ -278,15 +321,22 @@ fun SessionCard(
                         Icons.Default.DateRange,
                         contentDescription = null,
                         modifier = Modifier.size(16.dp),
-                        tint = MaterialTheme.colorScheme.secondary
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
-                    val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
+                    val start = session.startTime
+                    val end = session.endTime
+                    val timeLabel = if (start != null && end != null) {
+                        val startTimeLocal = TimeZoneUtils.toUserLocalTime(start)
+                        val endTimeLocal = TimeZoneUtils.toUserLocalTime(end)
+                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}"
+                    } else {
+                        "Time TBA"
+                    }
                     Text(
-                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
+                        timeLabel,
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -434,16 +484,30 @@ fun SessionDetailDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.primary,
+        titleContentColor = MaterialTheme.colorScheme.tertiary,
+        textContentColor = MaterialTheme.colorScheme.onPrimary,
         title = {
             Column {
-                Text(session.title, style = MaterialTheme.typography.titleLarge)
-                Spacer(modifier = Modifier.height(4.dp))
-                val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
-                val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
                 Text(
-                    "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
+                    session.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                val start = session.startTime
+                val end = session.endTime
+                val timeLabel = if (start != null && end != null) {
+                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(start)
+                    val endTimeLocal = TimeZoneUtils.toUserLocalTime(end)
+                    "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}"
+                } else {
+                    "Time TBA"
+                }
+                Text(
+                    timeLabel,
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -478,7 +542,7 @@ fun SessionDetailDialog(
 
                 session.speaker?.let { speaker ->
                     item {
-                        HorizontalDivider()
+                        HorizontalDivider(color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.4f))
                     }
 
                     item {
@@ -497,16 +561,18 @@ fun SessionDetailDialog(
                                 Text(
                                     speaker.name,
                                     style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
                                 Text(
                                     speaker.title,
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
                                 Text(
                                     speaker.company,
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.secondary
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
                             }
                         }
@@ -527,18 +593,23 @@ fun SessionDetailDialog(
             }
         },
         confirmButton = {
-            Row {
-                TextButton(onClick = onToggleFavorite) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Button(
+                    onClick = onToggleFavorite,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        contentColor = MaterialTheme.colorScheme.onTertiary
+                    )
+                ) {
                     Icon(
                         if (isFavorite) Icons.Default.Star else Icons.Default.FavoriteBorder,
-                        contentDescription = null,
-                        tint = if (isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.primary
+                        contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(if (isFavorite) "Remove" else "Add to My Agenda")
                 }
                 TextButton(onClick = onDismiss) {
-                    Text("Close")
+                    Text("Close", color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
         }
@@ -692,7 +763,7 @@ fun SearchBar(
         singleLine = true,
         shape = RoundedCornerShape(28.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.secondary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             unfocusedContainerColor = MaterialTheme.colorScheme.surface

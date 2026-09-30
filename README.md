@@ -1,6 +1,6 @@
-# DroidCon Uganda 2025 Conference App 🇺🇬
+# DroidCon Uganda 2026 Conference App 🇺🇬
 
-A beautiful Kotlin Multiplatform conference app built for DroidCon Uganda! Features a fun UI, smooth animations, and full iOS + Android support.
+A Kotlin Multiplatform conference app for DroidCon Uganda, October 28–29, 2026 at the National ICT Innovation Hub in Kampala. Sessions and speakers come from Sessionize event `bin6i3xe`. Times appear after the schedule is announced; until then talks are listed as unscheduled.
 
 ## Features ✨
 
@@ -125,4 +125,4 @@ Open source - use it for your own conferences!
 
 ---
 
-Built with ❤️ using Kotlin Multiplatform & Compose for DroidCon Uganda 2025
+Built with ❤️ using Kotlin Multiplatform & Compose for DroidCon Uganda 2026

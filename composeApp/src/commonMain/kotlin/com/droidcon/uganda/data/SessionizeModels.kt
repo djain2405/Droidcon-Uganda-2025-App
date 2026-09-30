@@ -60,6 +60,16 @@ data class SessionizeSessionCategory(
     val sort: Int = 0  // Optional in some responses
 )
 
+/**
+ * Sessions-only slice of /view/All.
+ * The full payload also includes speakers, questions, and rooms, which are ignored.
+ * Speaker session ids in that payload are bare ints and do not match [SessionizeSpeaker].
+ */
+@Serializable
+data class SessionizeAllSessions(
+    val sessions: List<SessionizeSession> = emptyList()
+)
+
 // Old /view/All format (kept for reference, not used anymore)
 @Serializable
 data class SessionizeResponse(

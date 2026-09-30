@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import coil3.SingletonImageLoader
+import com.droidcon.uganda.utils.ImageLoaderFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +18,10 @@ class MainActivity : ComponentActivity() {
 
         // Initialize AppContext for DataStore
         AppContext.init(this)
+
+        SingletonImageLoader.setSafe { context ->
+            ImageLoaderFactory.create(context)
+        }
 
         setContent {
             App()

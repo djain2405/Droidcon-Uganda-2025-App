@@ -7,10 +7,10 @@
 
     <!-- Orange to Green gradient background -->
     <path
-        android:fillColor="#FA6E50"
+        android:fillColor="#0055FF"
         android:pathData="M0,0h72v72h-72z"/>
     <path
-        android:fillColor="#43BC6E"
+        android:fillColor="#00FF4F"
         android:pathData="M0,0 L72,72 L72,0 Z"
         android:fillAlpha="0.4"/>
 

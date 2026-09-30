@@ -38,7 +38,7 @@ fun App() {
                 TopAppBar(
                     title = {
                         Text(
-                            "DroidCon Uganda 2025",
+                            "DroidCon Uganda 2026",
                             style = MaterialTheme.typography.titleLarge
                         )
                     },
@@ -71,9 +71,9 @@ fun App() {
                             selected = selectedTab == tab,
                             onClick = { selectedTab = tab },
                             colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.secondary,
-                                selectedTextColor = MaterialTheme.colorScheme.secondary,
-                                indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
+                                selectedIconColor = MaterialTheme.colorScheme.onTertiary,
+                                selectedTextColor = MaterialTheme.colorScheme.onTertiary,
+                                indicatorColor = MaterialTheme.colorScheme.tertiary,
                                 unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                 unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -113,7 +113,7 @@ fun AboutDialog(onDismiss: () -> Unit) {
             Icon(
                 Icons.Default.Info,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary
+                tint = MaterialTheme.colorScheme.primary
             )
         },
         title = {
@@ -125,11 +125,11 @@ fun AboutDialog(onDismiss: () -> Unit) {
                 val isLocalTime = !TimeZoneUtils.isInConferenceTimezone()
 
                 Text(
-                    "🇺🇬 DroidCon Uganda 2025\n\n" +
+                    "🇺🇬 DroidCon Uganda 2026\n\n" +
                     "Join Uganda's premier Android developer conference! " +
                     "Connect with fellow developers, learn from industry experts, " +
                     "and discover the latest in Android development.\n\n" +
-                    "📅 Date: November 10-11, 2025\n" +
+                    "📅 Date: October 28-29, 2026\n" +
                     "📍 Venue: NATIONAL ICT INNOVATION HUB\n" +
                     "Kampala, Uganda\n" +
                     "🗺️ https://maps.app.goo.gl/wLGMw7RDYveeXZZa7\n" +

@@ -1,7 +1,7 @@
 # DroidCon Uganda - Store Listing Information
 
 ## App Name
-DroidCon Uganda 2025
+DroidCon Uganda 2026
 
 ## Short Description (80 characters max)
 Official DroidCon Uganda conference app - browse sessions, speakers & agenda
@@ -10,7 +10,7 @@ Official DroidCon Uganda conference app - browse sessions, speakers & agenda
 
 ### Google Play Store (4000 characters max)
 
-**DroidCon Uganda 2025 - Your Complete Conference Companion** 🇺🇬
+**DroidCon Uganda 2026 - Your Complete Conference Companion** 🇺🇬
 
 Never miss a session at Uganda's premier Android developer conference! The official DroidCon Uganda app helps you plan your perfect conference experience.
 
@@ -52,7 +52,7 @@ All conference data is available offline once loaded. No internet connection nee
 **PRIVACY FIRST:**
 Your favorites are stored locally on your device. We don't collect any personal data or track your usage.
 
-Join us at DroidCon Uganda 2025 in Kampala and discover the latest in Android development, connect with fellow developers, and learn from industry experts!
+Join us at DroidCon Uganda 2026 on October 28–29 at the National ICT Innovation Hub in Kampala and discover the latest in Android development, connect with fellow developers, and learn from industry experts!
 
 **About DroidCon:**
 DroidCon is the global conference series for Android developers. DroidCon Uganda brings together the East African developer community to share knowledge, network, and celebrate Android development.
@@ -63,7 +63,7 @@ Built with ❤️ using Kotlin Multiplatform & Compose Multiplatform
 
 ### App Store (Apple) (4000 characters max)
 
-**DroidCon Uganda 2025 - Your Complete Conference Companion** 🇺🇬
+**DroidCon Uganda 2026 - Your Complete Conference Companion** 🇺🇬
 
 The official app for Uganda's premier Android developer conference! Plan your perfect conference experience with comprehensive session schedules, speaker profiles, and personalized agenda building.
 
@@ -108,7 +108,7 @@ The official app for Uganda's premier Android developer conference! Plan your pe
 • Works offline after initial data load
 
 **ABOUT THE CONFERENCE:**
-DroidCon Uganda 2025 brings together developers, designers, and tech enthusiasts from across East Africa. Learn about Android development, Kotlin programming, mobile UX design, and cloud technologies from industry experts.
+DroidCon Uganda 2026 (October 28–29, National ICT Innovation Hub, Kampala) brings together developers, designers, and tech enthusiasts from across East Africa. Learn about Android development, Kotlin programming, mobile UX design, and cloud technologies from industry experts.
 
 **TECHNICAL TRACKS:**
 Android • Kotlin • Design & UX • Cloud & Backend • Keynotes

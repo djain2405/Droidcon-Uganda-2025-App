@@ -17,10 +17,9 @@ import kotlinx.serialization.json.Json
  * Sessionize API Documentation: https://sessionize.com/playbook/api
  */
 class ConferenceRepository(
-    // TODO: Replace "YOUR_EVENT_ID" with your actual Sessionize event ID
-    // You can find this in your Sessionize dashboard under API/Embed
-    // Example: "jl4ktls0" - this should be the alphanumeric ID, not the event slug
-    private val sessionizeEventId: String = "re6do43h",
+    // 2026 Sessionize endpoint. GridSmart is empty until the schedule is announced;
+    // unscheduled talks then come from /view/All.
+    private val sessionizeEventId: String = "bin6i3xe",
     private val useSessionize: Boolean = true
 ) {
     private val sessionizeBaseUrl = "https://sessionize.com/api/v2"
@@ -51,24 +50,28 @@ class ConferenceRepository(
                 return Result.success(getLocalSessions())
             }
 
-            // Fetch GridSmart data (complete schedule)
-            val gridUrl = "$sessionizeBaseUrl/$sessionizeEventId/view/GridSmart"
-            println("🌐 Fetching schedule from Sessionize GridSmart: $gridUrl")
-
-            val gridResponse: SessionizeGridResponse = client.get(gridUrl).body()
-
-            // Fetch speaker details
             val speakersUrl = "$sessionizeBaseUrl/$sessionizeEventId/view/Speakers"
             println("🌐 Fetching speakers from Sessionize: $speakersUrl")
-
             val speakers: List<SessionizeSpeaker> = client.get(speakersUrl).body()
             val speakersMap = speakers.associateBy { it.id }
 
-            // Map the data
-            val sessions = SessionizeMapper.mapGridResponse(gridResponse, speakersMap)
+            val gridUrl = "$sessionizeBaseUrl/$sessionizeEventId/view/GridSmart"
+            println("🌐 Fetching schedule from Sessionize GridSmart: $gridUrl")
+            val gridResponse: SessionizeGridResponse = client.get(gridUrl).body()
+            val gridSessions = SessionizeMapper.mapGridResponse(gridResponse, speakersMap)
 
-            println("✅ Successfully fetched ${sessions.size} sessions from Sessionize API (GridSmart)")
-            println("   Including service sessions (breaks, registration, etc.)")
+            val sessions = if (gridSessions.isNotEmpty()) {
+                println("✅ Successfully fetched ${gridSessions.size} sessions from Sessionize GridSmart")
+                gridSessions
+            } else {
+                val allUrl = "$sessionizeBaseUrl/$sessionizeEventId/view/All"
+                println("🌐 GridSmart has no sessions. Fetching accepted talks from: $allUrl")
+                val allSessions: SessionizeAllSessions = client.get(allUrl).body()
+                val mapped = SessionizeMapper.mapAllSessions(allSessions.sessions, speakersMap)
+                println("✅ Successfully fetched ${mapped.size} unscheduled sessions from Sessionize All")
+                mapped
+            }
+
             Result.success(sessions)
         } catch (e: Exception) {
             println("❌ Error fetching from Sessionize API: ${e.message}")

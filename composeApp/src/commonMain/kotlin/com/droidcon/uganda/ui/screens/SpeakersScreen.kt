@@ -2,6 +2,7 @@ package com.droidcon.uganda.ui.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,11 +18,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Speaker
 import com.droidcon.uganda.ui.ConferenceViewModel
+import com.droidcon.uganda.ui.theme.DroidConCyan
+import com.droidcon.uganda.ui.theme.DroidConGreen
 import com.droidcon.uganda.utils.TimeZoneUtils
 import org.jetbrains.compose.resources.painterResource
 import droidconuganda.composeapp.generated.resources.*
@@ -39,13 +43,26 @@ fun SpeakersScreen(viewModel: ConferenceViewModel) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text(
-                "Our Speakers",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.secondary
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
+                    Text(
+                        "Our Speakers",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "Meet the experts at DroidCon Uganda",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
         }
 
         items(viewModel.speakers) { speaker ->
@@ -88,8 +105,12 @@ fun SpeakerCard(
             },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        border = BorderStroke(
+            3.dp,
+            Brush.horizontalGradient(listOf(DroidConGreen, DroidConCyan))
+        ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
         Row(
@@ -115,19 +136,20 @@ fun SpeakerCard(
                 Text(
                     speaker.name,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.tertiary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     speaker.title,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     speaker.company,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.SemiBold
                 )
             }
@@ -139,7 +161,7 @@ fun SpeakerCard(
                         Icons.Default.Share,
                         contentDescription = "Twitter",
                         modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.secondary
+                        tint = MaterialTheme.colorScheme.tertiary
                     )
                 }
                 speaker.linkedin?.let {
@@ -148,7 +170,7 @@ fun SpeakerCard(
                         Icons.Default.AccountCircle,
                         contentDescription = "LinkedIn",
                         modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.secondary
+                        tint = MaterialTheme.colorScheme.tertiary
                     )
                 }
             }
@@ -227,13 +249,13 @@ fun SpeakerDetailDialog(
                                         Icons.Default.Share,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
-                                        tint = MaterialTheme.colorScheme.secondary
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.secondary,
+                                        color = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.weight(1f)
                                     )
                                 }
@@ -247,13 +269,13 @@ fun SpeakerDetailDialog(
                                         Icons.Default.AccountCircle,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
-                                        tint = MaterialTheme.colorScheme.secondary
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.secondary,
+                                        color = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.weight(1f)
                                     )
                                 }
@@ -279,26 +301,35 @@ fun SpeakerDetailDialog(
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
-                                // Date if multi-day
-                                val startTimeLocal = TimeZoneUtils.toUserLocalTime(session.startTime)
-                                Text(
-                                    TimeZoneUtils.formatShortDate(startTimeLocal),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
+                                val start = session.startTime
+                                val end = session.endTime
+                                if (start != null && end != null) {
+                                    val startTimeLocal = TimeZoneUtils.toUserLocalTime(start)
+                                    Text(
+                                        TimeZoneUtils.formatShortDate(startTimeLocal),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                }
 
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    val endTimeLocal = TimeZoneUtils.toUserLocalTime(session.endTime)
+                                    val timeLabel = if (start != null && end != null) {
+                                        val startTimeLocal = TimeZoneUtils.toUserLocalTime(start)
+                                        val endTimeLocal = TimeZoneUtils.toUserLocalTime(end)
+                                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}"
+                                    } else {
+                                        "Time TBA"
+                                    }
                                     Text(
-                                        "${TimeZoneUtils.formatTime(startTimeLocal)} - ${TimeZoneUtils.formatTime(endTimeLocal)}",
+                                        timeLabel,
                                         style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.secondary,
+                                        color = MaterialTheme.colorScheme.primary,
                                         fontWeight = FontWeight.Bold
                                     )
                                     // Track Badge - only show if display name is not empty

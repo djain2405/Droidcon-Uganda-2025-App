@@ -59,7 +59,7 @@ class ConferenceViewModel(
     // Get all unique conference days
     val conferenceDays: List<String>
         get() = sessions
-            .map { TimeZoneUtils.getDateKey(it.startTime) }
+            .mapNotNull { session -> session.startTime?.let { TimeZoneUtils.getDateKey(it) } }
             .distinct()
             .sorted()
 
@@ -136,7 +136,9 @@ class ConferenceViewModel(
 
         // Filter by day if selected
         if (day != null) {
-            filtered = filtered.filter { TimeZoneUtils.getDateKey(it.startTime) == day }
+            filtered = filtered.filter { session ->
+                session.startTime?.let { TimeZoneUtils.getDateKey(it) } == day
+            }
         }
 
         // Filter by search query if not empty

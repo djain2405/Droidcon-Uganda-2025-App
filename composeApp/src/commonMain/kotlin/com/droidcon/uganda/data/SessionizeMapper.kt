@@ -90,11 +90,24 @@ object SessionizeMapper {
         val speakers = response.speakers.map { mapSpeaker(it) }
 
         // Map sessions with references to speakers
-        val sessions = response.sessions.mapNotNull { sessionizeSession ->
+        val sessions = response.sessions.map { sessionizeSession ->
             mapSession(sessionizeSession, speakersMap, roomsMap, categoriesMap)
         }
 
         return Pair(sessions, speakers)
+    }
+
+    /**
+     * Maps /view/All sessions. Times may be missing until the schedule is announced.
+     * Question answers are intentionally ignored.
+     */
+    fun mapAllSessions(
+        sessions: List<SessionizeSession>,
+        speakersMap: Map<String, SessionizeSpeaker>
+    ): List<Session> {
+        return sessions.map { session ->
+            mapSession(session, speakersMap, emptyMap(), emptyMap())
+        }
     }
 
     /**
@@ -105,10 +118,9 @@ object SessionizeMapper {
         speakersMap: Map<String, SessionizeSpeaker>,
         roomsMap: Map<Int, SessionizeRoom>,
         categoriesMap: Map<Int, CategoryInfo>
-    ): Session? {
-        // Parse start and end times (required for sessions)
-        val startTime = sessionizeSession.startsAt?.let { parseInstantToLocalDateTime(it) } ?: return null
-        val endTime = sessionizeSession.endsAt?.let { parseInstantToLocalDateTime(it) } ?: return null
+    ): Session {
+        val startTime = sessionizeSession.startsAt?.let { parseInstantToLocalDateTime(it) }
+        val endTime = sessionizeSession.endsAt?.let { parseInstantToLocalDateTime(it) }
 
         // Get the first speaker (if multiple, we'll use the first one)
         val speaker = sessionizeSession.speakers.firstOrNull()?.let { speakerId ->

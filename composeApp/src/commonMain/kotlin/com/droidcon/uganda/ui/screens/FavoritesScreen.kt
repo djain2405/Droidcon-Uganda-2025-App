@@ -42,20 +42,27 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
         if (selectedDay == null) {
             allFavorites
         } else {
-            allFavorites.filter { TimeZoneUtils.getDateKey(it.startTime) == selectedDay }
+            allFavorites.filter { session ->
+                session.startTime?.let { TimeZoneUtils.getDateKey(it) } == selectedDay
+            }
         }
     }
 
-    // Group favorite sessions by date
     val sessionsByDate = remember(favoriteSessions) {
         favoriteSessions
+            .filter { it.startTime != null }
             .sortedBy { it.startTime }
             .groupBy { session ->
-                TimeZoneUtils.getDateKey(session.startTime)
+                TimeZoneUtils.getDateKey(session.startTime!!)
             }
             .toList()
             .sortedBy { it.first }
             .toMap()
+    }
+    val unscheduledSessions = remember(favoriteSessions) {
+        favoriteSessions
+            .filter { it.startTime == null }
+            .sortedBy { it.title }
     }
 
     Column(
@@ -82,20 +89,25 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     item {
-                        Column {
-                            Text(
-                                "My Personal Agenda",
-                                style = MaterialTheme.typography.headlineMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                "${favoriteSessions.size} session${if (favoriteSessions.size != 1) "s" else ""} saved",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.tertiary,
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
+                                Text(
+                                    "My Personal Agenda",
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onTertiary
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    "${favoriteSessions.size} session${if (favoriteSessions.size != 1) "s" else ""} saved",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onTertiary
+                                )
+                            }
                         }
                     }
 
@@ -104,11 +116,11 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                         if (selectedDay == null) {
                             item {
                                 val firstSession = sessionsForDate.first()
-                                val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime)
+                                val localDate = TimeZoneUtils.toUserLocalTime(firstSession.startTime!!)
 
                                 Surface(
                                     modifier = Modifier.fillMaxWidth(),
-                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    color = MaterialTheme.colorScheme.primary,
                                     shape = RoundedCornerShape(12.dp)
                                 ) {
                                     Text(
@@ -116,7 +128,7 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
                                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                                         style = MaterialTheme.typography.titleLarge,
                                         fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                        color = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
                             }
@@ -124,6 +136,36 @@ fun FavoritesScreen(viewModel: ConferenceViewModel) {
 
                         items(
                             sessionsForDate,
+                            key = { it.id }
+                        ) { session ->
+                            SessionCard(
+                                session = session,
+                                currentTime = currentTime,
+                                isFavorite = true,
+                                onToggleFavorite = { viewModel.toggleFavorite(session.id) },
+                                onClick = { selectedSession = session }
+                            )
+                        }
+                    }
+
+                    if (unscheduledSessions.isNotEmpty()) {
+                        item {
+                            Surface(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text(
+                                    "Schedule coming soon",
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        }
+                        items(
+                            unscheduledSessions,
                             key = { it.id }
                         ) { session ->
                             SessionCard(

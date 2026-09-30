@@ -1,15 +1,14 @@
 #!/bin/bash
-# Test Sessionize API endpoints
-# Tests both GridSmart (for schedule) and Speakers (for speaker details)
+# Test Sessionize API endpoints for the 2026 event.
+# GridSmart may be empty until the schedule is announced. Accepted talks come from All.
 
-EVENT_ID="re6do43h"  # DroidCon Uganda 2025
+EVENT_ID="bin6i3xe"
 
 echo "======================================"
 echo "Testing Sessionize API Integration"
 echo "======================================"
 echo ""
 
-# Test GridSmart endpoint
 echo "1️⃣  Testing GridSmart endpoint (schedule)..."
 echo "   URL: https://sessionize.com/api/v2/$EVENT_ID/view/GridSmart"
 echo ""
@@ -18,54 +17,76 @@ GRID_RESPONSE=$(curl -s "https://sessionize.com/api/v2/$EVENT_ID/view/GridSmart"
 
 if echo "$GRID_RESPONSE" | grep -q "document.write"; then
     echo "   ❌ ERROR: GridSmart endpoint is not configured!"
-    echo "   The endpoint is returning HTML/JavaScript instead of JSON."
     exit 1
-elif echo "$GRID_RESPONSE" | grep -q '"date"'; then
-    echo "   ✅ GridSmart endpoint working!"
+fi
 
-    # Parse the response with Python for better stats
-    if command -v python3 &> /dev/null; then
-        GRID_STATS=$(python3 -c "
-import sys, json
-data = json.loads('''$GRID_RESPONSE''')
-days = len(data)
-rooms = len(data[0]['rooms']) if data else 0
-sessions = sum(len(room['sessions']) for day in data for room in day['rooms'])
-print(f'   Days: {days}, Rooms: {rooms}, Total sessions: {sessions}')
-" 2>/dev/null)
-        echo "$GRID_STATS"
-    fi
-else
+GRID_STATS=$(printf '%s' "$GRID_RESPONSE" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+if not isinstance(data, list):
+    raise SystemExit('not a list')
+sessions = sum(len(room.get('sessions', [])) for day in data for room in day.get('rooms', []))
+print(f'{len(data)} {sessions}')
+" 2>/dev/null) || {
     echo "   ⚠️  WARNING: Unexpected response format from GridSmart"
+    exit 1
+}
+
+GRID_DAYS=$(echo "$GRID_STATS" | awk '{print $1}')
+GRID_SESSIONS=$(echo "$GRID_STATS" | awk '{print $2}')
+if [ "$GRID_SESSIONS" = "0" ]; then
+    echo "   ✅ GridSmart is empty. Schedule is not announced yet."
+else
+    echo "   ✅ GridSmart endpoint working!"
+    echo "   Days: $GRID_DAYS, Total sessions: $GRID_SESSIONS"
+fi
+
+echo ""
+echo "2️⃣  Testing All endpoint (accepted talks)..."
+echo "   URL: https://sessionize.com/api/v2/$EVENT_ID/view/All"
+echo ""
+
+ALL_RESPONSE=$(curl -s "https://sessionize.com/api/v2/$EVENT_ID/view/All")
+ALL_COUNT=$(printf '%s' "$ALL_RESPONSE" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+sessions = data.get('sessions', [])
+titled = [s for s in sessions if s.get('title')]
+print(len(titled))
+" 2>/dev/null) || {
+    echo "   ❌ ERROR: Unexpected response format from All"
+    exit 1
+}
+
+if [ "$ALL_COUNT" -gt 0 ]; then
+    echo "   ✅ All endpoint working!"
+    echo "   Sessions with titles: $ALL_COUNT"
+else
+    echo "   ❌ ERROR: All endpoint returned no session titles"
     exit 1
 fi
 
 echo ""
-
-# Test Speakers endpoint
-echo "2️⃣  Testing Speakers endpoint..."
+echo "3️⃣  Testing Speakers endpoint..."
 echo "   URL: https://sessionize.com/api/v2/$EVENT_ID/view/Speakers"
 echo ""
 
 SPEAKERS_RESPONSE=$(curl -s "https://sessionize.com/api/v2/$EVENT_ID/view/Speakers")
-
-if echo "$SPEAKERS_RESPONSE" | grep -q "document.write"; then
-    echo "   ❌ ERROR: Speakers endpoint is not configured!"
+SPEAKER_COUNT=$(printf '%s' "$SPEAKERS_RESPONSE" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+named = [s for s in data if s.get('fullName')]
+print(len(named))
+" 2>/dev/null) || {
+    echo "   ❌ ERROR: Unexpected response format from Speakers"
     exit 1
-elif echo "$SPEAKERS_RESPONSE" | grep -q '"fullName"'; then
-    echo "   ✅ Speakers endpoint working!"
+}
 
-    # Count speakers
-    if command -v python3 &> /dev/null; then
-        SPEAKER_COUNT=$(python3 -c "
-import sys, json
-data = json.loads('''$SPEAKERS_RESPONSE''')
-print(f'   Total speakers: {len(data)}')
-" 2>/dev/null)
-        echo "$SPEAKER_COUNT"
-    fi
+if [ "$SPEAKER_COUNT" -gt 0 ]; then
+    echo "   ✅ Speakers endpoint working!"
+    echo "   Total speakers: $SPEAKER_COUNT"
 else
-    echo "   ⚠️  WARNING: Unexpected response format from Speakers"
+    echo "   ❌ ERROR: Speakers endpoint returned no names"
     exit 1
 fi
 
@@ -75,8 +96,7 @@ echo "✅ All Sessionize endpoints working!"
 echo "======================================"
 echo ""
 echo "Your app will now:"
-echo "  • Fetch complete schedule from GridSmart"
-echo "  • Include service sessions (breaks, registration)"
-echo "  • Get full speaker details with bios and photos"
-echo "  • Display organized agenda by date and room"
+echo "  • Use GridSmart when the schedule is announced"
+echo "  • Otherwise list accepted talks from All as unscheduled"
+echo "  • Get speaker details with bios and photos"
 echo ""
