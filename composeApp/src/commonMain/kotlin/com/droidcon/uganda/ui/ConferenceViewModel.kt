@@ -5,13 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.droidcon.uganda.data.ConferenceRepository
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.data.Speaker
+import com.droidcon.uganda.data.Track
+import com.droidcon.uganda.data.TypesenseConfig
+import com.droidcon.uganda.data.matchesSessionQuery
+import com.droidcon.uganda.data.typesenseAdminApiKey
 import com.droidcon.uganda.utils.TimeZoneUtils
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 sealed class UiState<out T> {
@@ -39,6 +44,14 @@ class ConferenceViewModel(
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val _selectedTrack = MutableStateFlow<Track?>(null)
+    val selectedTrack: StateFlow<Track?> = _selectedTrack.asStateFlow()
+
+    // Null means Typesense is not constraining results (empty query, not configured, or request failed).
+    private val _typesenseMatchIds = MutableStateFlow<List<String>?>(null)
+    val typesenseMatchIds: StateFlow<List<String>?> = _typesenseMatchIds.asStateFlow()
+    private var searchJob: Job? = null
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -95,6 +108,12 @@ class ConferenceViewModel(
                 UiState.Success(repository.getLocalSpeakers())
             }
         )
+
+        val adminKey = typesenseAdminApiKey()
+        if (adminKey.isNotBlank()) {
+            repository.indexSessions(sessions, adminKey)
+        }
+        refreshTypesenseSearch()
     }
 
     fun refreshData() {
@@ -117,42 +136,67 @@ class ConferenceViewModel(
 
     fun selectDay(day: String?) {
         _selectedDay.value = day
+        refreshTypesenseSearch()
     }
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
+        refreshTypesenseSearch()
     }
 
     fun clearSearch() {
         _searchQuery.value = ""
+        refreshTypesenseSearch()
     }
 
-    // Get sessions filtered by selected day and search query
+    fun selectTrack(track: Track?) {
+        _selectedTrack.value = track
+        refreshTypesenseSearch()
+    }
+
+    private fun refreshTypesenseSearch() {
+        searchJob?.cancel()
+        val query = _searchQuery.value.trim()
+        if (query.isEmpty() || !TypesenseConfig.isConfigured) {
+            _typesenseMatchIds.value = null
+            return
+        }
+        // Drop the previous id list so a new query cannot briefly show the old hits.
+        _typesenseMatchIds.value = null
+        searchJob = viewModelScope.launch {
+            val ids = repository.searchSessions(query)
+            if (isActive && _searchQuery.value.trim() == query) {
+                _typesenseMatchIds.value = ids
+            }
+        }
+    }
+
+    // Day and track stay on-device. A non-empty query uses Typesense order when the request succeeds.
     fun getFilteredSessions(): List<Session> {
         val day = _selectedDay.value
         val query = _searchQuery.value.trim()
+        val track = _selectedTrack.value
+        val remoteIds = _typesenseMatchIds.value
 
         var filtered = sessions
 
-        // Filter by day if selected
+        if (query.isNotEmpty() && remoteIds != null) {
+            val byId = filtered.associateBy { it.id }
+            filtered = remoteIds.mapNotNull { byId[it] }
+        }
+
         if (day != null) {
             filtered = filtered.filter { session ->
                 session.startTime?.let { TimeZoneUtils.getDateKey(it) } == day
             }
         }
 
-        // Filter by search query if not empty
-        if (query.isNotEmpty()) {
-            filtered = filtered.filter { session ->
-                // Search in session title
-                session.title.contains(query, ignoreCase = true) ||
-                // Search in session description
-                session.description.contains(query, ignoreCase = true) ||
-                // Search in speaker name
-                session.speaker?.name?.contains(query, ignoreCase = true) == true ||
-                // Search in track name
-                session.track.displayName.contains(query, ignoreCase = true)
-            }
+        if (track != null) {
+            filtered = filtered.filter { it.track == track }
+        }
+
+        if (query.isNotEmpty() && remoteIds == null) {
+            filtered = filtered.filter { session -> matchesSessionQuery(session, query) }
         }
 
         return filtered

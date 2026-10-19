@@ -35,7 +35,34 @@ enum class Track(val displayName: String, val color: Long?) {
     DESIGN("Design & UX", 0xFFFF9800),
     CLOUD("Cloud & Backend", 0xFF9C27B0),
     KEYNOTE("Keynote", 0xFFF44336),
-    NONE("", color = null)
+    NONE("", color = null);
+
+    companion object {
+        /**
+         * Tags a talk only when the title clearly names a track.
+         * Kotlin wins over "server" so "Kotlin's Journey to AI-First Servers" stays on Kotlin.
+         */
+        fun fromTitle(title: String): Track {
+            val normalized = title.lowercase()
+                .replace('\u2018', '\'')
+                .replace('\u2019', '\'')
+                .replace('\n', ' ')
+            return when {
+                normalized.contains("welcome address") || normalized.contains("keynote") -> KEYNOTE
+                normalized.contains("kotlin") -> KOTLIN
+                normalized.contains("android") ||
+                    normalized.contains("compose") ||
+                    normalized.contains("f-droid") -> ANDROID
+                normalized.contains("cloud") ||
+                    normalized.contains("backend") ||
+                    Regex("\\bservers?\\b").containsMatchIn(normalized) -> CLOUD
+                normalized.contains("design") ||
+                    normalized.contains("user experience") ||
+                    Regex("\\bux\\b").containsMatchIn(normalized) -> DESIGN
+                else -> NONE
+            }
+        }
+    }
 }
 
 @Serializable

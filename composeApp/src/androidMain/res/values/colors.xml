@@ -3,5 +3,5 @@
     <!-- DroidCon Uganda brand colors from uganda.droidcon.com -->
     <color name="droidcon_blue">#FF0055FF</color>
     <color name="droidcon_green">#FF00FF4F</color>
-    <color name="splash_background">#FFFFFFFF</color>
+    <color name="splash_background">#FF0055FF</color>
 </resources>

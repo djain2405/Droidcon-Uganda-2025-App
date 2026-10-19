@@ -33,6 +33,13 @@ class ConferenceRepository(
             })
         }
     }
+    private val typesense = TypesenseClient(client)
+
+    suspend fun searchSessions(query: String): List<String>? = typesense.search(query)
+
+    suspend fun indexSessions(sessions: List<Session>, adminApiKey: String) {
+        typesense.upsertSessions(sessions, adminApiKey)
+    }
 
     /**
      * Fetch all sessions from Sessionize API using GridSmart endpoint

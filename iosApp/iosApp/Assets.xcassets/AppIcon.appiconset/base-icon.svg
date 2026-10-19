@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-  <!-- Orange background -->
-  <rect width="1024" height="1024" fill="#FA6E50"/>
-
-  <!-- Green gradient overlay -->
-  <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FA6E50;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#43BC6E;stop-opacity:0.4" />
-    </linearGradient>
-  </defs>
-  <rect width="1024" height="1024" fill="url(#grad)"/>
-
-  <!-- Circle background for DU -->
-  <circle cx="512" cy="512" r="420" fill="#FFFFFF" opacity="0.2"/>
-
-  <!-- "D" Letter -->
-  <g transform="translate(280, 330)">
-    <path d="M0,0 L0,360 L120,360 C200,360 240,300 240,180 C240,60 200,0 120,0 Z M60,60 L120,60 C160,60 180,100 180,180 C180,260 160,300 120,300 L60,300 Z" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 108 108">
+  <rect width="108" height="108" fill="#0055FF"/>
+  <g transform="translate(22,30)">
+    <path fill="#FFFFFF" fill-rule="evenodd" d="M0,0 L0,36 L14,36 C23,36 28,29 28,18 C28,7 23,0 14,0 Z M7,7 L14,7 C17.5,7 21,10 21,18 C21,26 17.5,29 14,29 L7,29 Z"/>
+    <path fill="#FFFFFF" transform="translate(36,0)" d="M0,0 L0,20 C0,30 6,36 14,36 C22,36 28,30 28,20 L28,0 L21,0 L21,20 C21,25 18.5,29 14,29 C9.5,29 7,25 7,20 L7,0 Z"/>
   </g>
-
-  <!-- "U" Letter -->
-  <g transform="translate(560, 330)">
-    <path d="M0,0 L0,220 C0,300 40,360 120,360 C200,360 240,300 240,220 L240,0 L180,0 L180,220 C180,260 160,300 120,300 C80,300 60,260 60,220 L60,0 Z" fill="#FFFFFF"/>
-  </g>
+  <rect x="33" y="74" width="42" height="6" rx="3" fill="#00FF4F"/>
 </svg>

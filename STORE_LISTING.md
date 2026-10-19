@@ -47,10 +47,10 @@ Built with Kotlin Multiplatform and Compose Multiplatform - the same codebase po
 • Advanced technical sessions
 
 **OFFLINE READY:**
-All conference data is available offline once loaded. No internet connection needed to view your schedule.
+The schedule stays available after it has loaded. Search uses Typesense when you are online, and falls back to on-device search when you are not.
 
-**PRIVACY FIRST:**
-Your favorites are stored locally on your device. We don't collect any personal data or track your usage.
+**PRIVACY:**
+Favorites stay on your device. There is no account. Session search sends only the text you type to Typesense, and the schedule is loaded from Sessionize. The app has no analytics and no ads.
 
 Join us at DroidCon Uganda 2026 on October 28–29 at the National ICT Innovation Hub in Kampala and discover the latest in Android development, connect with fellow developers, and learn from industry experts!
 
@@ -102,10 +102,12 @@ The official app for Uganda's premier Android developer conference! Plan your pe
 • Never miss a session due to timezone confusion
 
 **PRIVACY & OFFLINE:**
-• All data stored locally on your device
 • No account required
-• No personal data collection
-• Works offline after initial data load
+• Favorites stay on your device
+• Schedule is loaded from Sessionize
+• Search text is sent to Typesense only when you search
+• No analytics or advertising
+• Schedule remains available offline after it loads
 
 **ABOUT THE CONFERENCE:**
 DroidCon Uganda 2026 (October 28–29, National ICT Innovation Hub, Kampala) brings together developers, designers, and tech enthusiasts from across East Africa. Learn about Android development, Kotlin programming, mobile UX design, and cloud technologies from industry experts.

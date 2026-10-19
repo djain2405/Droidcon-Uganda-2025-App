@@ -2,13 +2,16 @@ package com.droidcon.uganda.ui.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -22,14 +25,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.droidcon.uganda.data.Session
 import com.droidcon.uganda.data.SessionLevel
+import com.droidcon.uganda.data.Track
 import com.droidcon.uganda.ui.ConferenceViewModel
 import com.droidcon.uganda.ui.UiState
+import com.droidcon.uganda.ui.theme.DroidConBlue
+import com.droidcon.uganda.ui.theme.DroidConNavy
 import com.droidcon.uganda.utils.TimeZoneUtils
 import org.jetbrains.compose.resources.painterResource
 import droidconuganda.composeapp.generated.resources.*
@@ -42,6 +52,8 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
     val favoriteIds by viewModel.favoriteSessionIds.collectAsState()
     val selectedDay by viewModel.selectedDay.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val selectedTrack by viewModel.selectedTrack.collectAsState()
+    val typesenseMatchIds by viewModel.typesenseMatchIds.collectAsState()
     val sessionsState by viewModel.sessionsState.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -73,9 +85,26 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
         }
     }
 
-    // Get filtered sessions based on selected day and search query
-    val displaySessions = remember(selectedDay, searchQuery, viewModel.sessions) {
+    // Get filtered sessions based on selected day, track, and search query
+    val displaySessions = remember(selectedDay, searchQuery, selectedTrack, typesenseMatchIds, viewModel.sessions) {
         viewModel.getFilteredSessions()
+    }
+    val availableTracks = remember(selectedDay, viewModel.sessions) {
+        val sessionsOnDay = if (selectedDay == null) {
+            viewModel.sessions
+        } else {
+            viewModel.sessions.filter { session ->
+                session.startTime?.let { TimeZoneUtils.getDateKey(it) } == selectedDay
+            }
+        }
+        Track.entries.filter { track ->
+            track != Track.NONE && sessionsOnDay.any { it.track == track }
+        }
+    }
+    LaunchedEffect(availableTracks, selectedTrack) {
+        if (selectedTrack != null && selectedTrack !in availableTracks) {
+            viewModel.selectTrack(null)
+        }
     }
 
     val sessionsByDate = remember(displaySessions) {
@@ -119,7 +148,15 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             onClear = { viewModel.clearSearch() },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
+        SearchPoweredByTypesense()
+
+        TrackFilter(
+            tracks = availableTracks,
+            selectedTrack = selectedTrack,
+            onTrackSelected = { viewModel.selectTrack(it) }
         )
 
         // Show loading indicator if data is loading
@@ -134,6 +171,7 @@ fun AgendaScreen(viewModel: ConferenceViewModel) {
             // Empty state when search returns no results
             EmptySearchState(
                 hasSearchQuery = searchQuery.isNotEmpty(),
+                hasTrackFilter = selectedTrack != null,
                 onClearSearch = { viewModel.clearSearch() }
             )
         } else {
@@ -384,9 +422,9 @@ fun SessionCard(
             // Session Title
             Text(
                 session.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.Black
             )
 
             // Speaker Info (if available)
@@ -406,8 +444,9 @@ fun SessionCard(
                     Column {
                         Text(
                             speaker.name,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
                         )
                         Text(
                             "${speaker.title} @ ${speaker.company}",
@@ -629,7 +668,7 @@ fun DaySelector(
     ) {
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // "All Days" chip
@@ -691,8 +730,8 @@ fun DayChip(
     Surface(
         modifier = Modifier
             .clickable(onClick = onClick)
-            .width(70.dp)
-            .height(70.dp),
+            .width(56.dp)
+            .height(56.dp),
         shape = RoundedCornerShape(16.dp),
         color = backgroundColor,
         shadowElevation = if (selected) 4.dp else 0.dp,
@@ -714,11 +753,10 @@ fun DayChip(
                 fontWeight = FontWeight.Bold,
                 color = contentColor
             )
-            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 subtitle,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.ExtraBold,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
                 color = contentColor
             )
         }
@@ -732,48 +770,169 @@ fun SearchBar(
     onClear: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedTextField(
+    val textStyle = MaterialTheme.typography.bodyLarge.copy(
+        color = Color.Black,
+        fontWeight = FontWeight.Medium
+    )
+    BasicTextField(
         value = query,
         onValueChange = onQueryChange,
-        modifier = modifier,
-        placeholder = {
-            Text(
-                "Search sessions, speakers, tracks...",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        },
-        leadingIcon = {
-            Icon(
-                Icons.Default.Search,
-                contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        },
-        trailingIcon = {
-            if (query.isNotEmpty()) {
-                IconButton(onClick = onClear) {
-                    Icon(
-                        Icons.Default.Clear,
-                        contentDescription = "Clear search",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+        modifier = modifier
+            .height(48.dp)
+            .border(2.dp, DroidConNavy, RoundedCornerShape(16.dp))
+            .background(Color.White, RoundedCornerShape(16.dp))
+            .padding(horizontal = 12.dp),
+        textStyle = textStyle,
+        singleLine = true,
+        cursorBrush = SolidColor(DroidConNavy),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    Icons.Default.Search,
+                    contentDescription = "Search",
+                    modifier = Modifier.size(22.dp),
+                    tint = Color.Black
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (query.isEmpty()) {
+                        Text(
+                            "Search sessions",
+                            style = textStyle.copy(fontWeight = FontWeight.Medium),
+                            color = Color(0xFF111111)
+                        )
+                    }
+                    innerTextField()
+                }
+                if (query.isNotEmpty()) {
+                    IconButton(onClick = onClear) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "Clear search",
+                            modifier = Modifier.size(22.dp),
+                            tint = Color.Black
+                        )
+                    }
                 }
             }
-        },
-        singleLine = true,
-        shape = RoundedCornerShape(28.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface
-        )
+        }
     )
+}
+
+@Composable
+fun SearchPoweredByTypesense(modifier: Modifier = Modifier) {
+    val uriHandler = LocalUriHandler.current
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(
+                role = Role.Button,
+                onClick = { uriHandler.openUri("https://typesense.org") }
+            ),
+        color = Color.White
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                "Search powered by Typesense",
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Image(
+                painter = painterResource(Res.drawable.typesense_logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(16.dp)
+                    .widthIn(max = 96.dp),
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
+@Composable
+fun TrackFilter(
+    tracks: List<Track>,
+    selectedTrack: Track?,
+    onTrackSelected: (Track?) -> Unit
+) {
+    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
+        Text(
+            "Track",
+            modifier = Modifier.padding(horizontal = 16.dp),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                TrackChip(
+                    label = "All",
+                    selected = selectedTrack == null,
+                    onClick = { onTrackSelected(null) }
+                )
+            }
+            items(tracks) { track ->
+                TrackChip(
+                    label = track.displayName,
+                    selected = selectedTrack == track,
+                    onClick = { onTrackSelected(track) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TrackChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .heightIn(min = 40.dp)
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(24.dp),
+        color = if (selected) DroidConBlue else Color.White,
+        border = if (selected) null else BorderStroke(2.dp, DroidConNavy)
+    ) {
+        Box(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                color = if (selected) Color.White else DroidConNavy
+            )
+        }
+    }
 }
 
 @Composable
 fun EmptySearchState(
     hasSearchQuery: Boolean,
+    hasTrackFilter: Boolean,
     onClearSearch: () -> Unit
 ) {
     Column(
@@ -794,17 +953,17 @@ fun EmptySearchState(
             if (hasSearchQuery) "No Sessions Found" else "No Sessions",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = Color.Black
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            if (hasSearchQuery) {
-                "Try adjusting your search terms or filters"
-            } else {
-                "No sessions available for the selected day"
+            when {
+                hasSearchQuery -> "Try adjusting your search terms or filters"
+                hasTrackFilter -> "No sessions on this track"
+                else -> "No sessions available for the selected day"
             },
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Black,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
         if (hasSearchQuery) {

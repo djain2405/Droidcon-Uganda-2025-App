@@ -1,74 +1,47 @@
 # Privacy Policy for DroidCon Uganda
 
-**Last updated: October 7, 2025**
+**Last updated: October 18, 2026**
 
 ## Introduction
 
-DroidCon Uganda ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use the DroidCon Uganda conference mobile application.
+DroidCon Uganda ("we", "our", or "us") explains below how the DroidCon Uganda conference app handles information. The app has no accounts and does not ask for your name, email, or phone number.
 
-## Information We Collect
+## Information stored on your device
 
-### Data Stored Locally
-The DroidCon Uganda app stores the following data locally on your device:
-- **Favorite Sessions**: Your saved/favorited conference sessions are stored locally using DataStore preferences
-- **App Preferences**: User interface preferences and settings
+- **Favorite sessions.** Sessions you mark for My Agenda are saved on the device with DataStore. They are not uploaded.
+- **Downloaded schedule.** Session and speaker details are saved so the agenda can be opened again without a new download.
 
-### Data We Do NOT Collect
-- We do not collect any personally identifiable information
-- We do not track your location
-- We do not collect device identifiers
-- We do not use analytics or tracking services
-- We do not share any data with third parties
+Uninstalling the app deletes this data.
 
-## How We Use Information
+## Information sent to other services
 
-The app uses locally stored data solely to:
-- Remember your favorite sessions between app launches
-- Provide a personalized conference schedule
-- Enhance your user experience
+The app does not include analytics or advertising. Two services are used to run the conference features:
 
-## Data Storage and Security
+- **Sessionize** (`sessionize.com`) provides the public conference schedule and speaker profiles. The app downloads that program data. It does not send your favorites or a user profile.
+- **Typesense** provides agenda search. When you type in the session search box, the search text is sent to our Typesense collection so matching sessions can be returned. The request includes the search text and a search-only API key. It does not include your name, email, or device identifier. If Typesense cannot be reached, search runs on the device instead.
 
-- All data is stored locally on your device
-- No data is transmitted to external servers
-- No user accounts or authentication required
-- Uninstalling the app removes all stored data
+We do not sell this information and we do not use it to identify you.
 
-## Conference Data
+## What we do not collect
 
-The app displays conference information including:
-- Session schedules and descriptions
-- Speaker profiles and bios
-- Venue and track information
+- No account or sign-in
+- No location
+- No advertising identifiers
+- No analytics or crash-reporting SDK
 
-This data is either embedded in the app or fetched from public DroidCon Uganda APIs and does not contain personal user information.
+## Children's privacy
 
-## Third-Party Services
+The app is for conference attendees and developers. It does not knowingly collect personal information from children under 13.
 
-The app does not integrate with any third-party services for analytics, advertising, or data collection.
+## Changes
 
-## Children's Privacy
+Updates to this policy will be posted at the same URL, with a new "Last updated" date.
 
-The app does not knowingly collect information from children under 13. The app is designed for conference attendees and developers.
+## Contact
 
-## Changes to This Privacy Policy
+Questions about this policy can be sent to droidconug@droidcon.com, or through the contact details on [uganda.droidcon.com](https://uganda.droidcon.com).
 
-We may update this Privacy Policy from time to time. Any changes will be reflected in the app and on our website.
+## Your choices
 
-## Contact Us
-
-If you have questions about this Privacy Policy, please contact us at:
-- Email: privacy@droidcon.uganda (example)
-- Twitter: @DroidConUganda
-
-## Your Rights
-
-Since all data is stored locally on your device:
-- You can delete all app data by uninstalling the app
-- You can clear favorites within the app at any time
-- No data deletion requests are necessary as we don't store data remotely
-
----
-
-**DroidCon Uganda Conference App**
-Built with Kotlin Multiplatform & Compose Multiplatform
+- Clear favorites inside My Agenda, or uninstall the app to remove data stored on the device.
+- Leave the search box empty. No search text is sent until you type a query.

@@ -58,8 +58,10 @@ object SessionizeMapper {
             speakersMap[sessionSpeaker.id]?.let { mapSpeaker(it) }
         }
 
-        // Determine track from categories
-        val track = determineTrackFromCategories(gridSession.categories)
+        // Determine track from categories, then from the title when the schedule has none
+        val track = determineTrackFromCategories(gridSession.categories).let { categorized ->
+            if (categorized == Track.NONE) Track.fromTitle(gridSession.title) else categorized
+        }
 
         // Determine session level from categories
         val level = determineLevelFromCategories(gridSession.categories)
@@ -127,8 +129,10 @@ object SessionizeMapper {
             speakersMap[speakerId]?.let { mapSpeaker(it) }
         }
 
-        // Determine track from categories
-        val track = determineTrack(sessionizeSession.categoryItems, categoriesMap)
+        // Determine track from categories, then from the title when the schedule has none
+        val track = determineTrack(sessionizeSession.categoryItems, categoriesMap).let { categorized ->
+            if (categorized == Track.NONE) Track.fromTitle(sessionizeSession.title) else categorized
+        }
 
         // Determine session level from categories
         val level = determineLevel(sessionizeSession.categoryItems, categoriesMap)

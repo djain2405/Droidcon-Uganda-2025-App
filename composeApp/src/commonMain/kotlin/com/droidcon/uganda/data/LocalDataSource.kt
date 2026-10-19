@@ -267,7 +267,7 @@ object LocalDataSource {
 
     )
 
-    val sessions = listOf(
+    private val untaggedSessions = listOf(
         // DAY 1 - Monday, November 10, 2025
         Session(
             id = "s1",
@@ -875,4 +875,12 @@ object LocalDataSource {
             level = null
         ),
     )
+
+    val sessions: List<Session> = untaggedSessions.map { session ->
+        if (session.track == Track.NONE) {
+            session.copy(track = Track.fromTitle(session.title))
+        } else {
+            session
+        }
+    }
 }
